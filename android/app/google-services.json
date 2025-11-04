@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "193139457493",
+    "project_id": "learnquran-c09f1",
+    "storage_bucket": "learnquran-c09f1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193139457493:android:1ea2674379811c15c1d15c",
+        "android_client_info": {
+          "package_name": "com.example.bangla_quran"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB55diDLXYO94Bt9wGmDqvD9kMoT0BsOaw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

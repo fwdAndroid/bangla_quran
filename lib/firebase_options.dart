@@ -25,8 +25,6 @@ class DefaultFirebaseOptions {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
-      case TargetPlatform.iOS:
-        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -50,19 +48,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBUNwgLM8tffzHatQKr6pVoBsmOLgfngT8',
-    appId: '1:513443381716:android:e566ee28db42324dbf9641',
-    messagingSenderId: '513443381716',
-    projectId: 'quranapp-53d85',
-    storageBucket: 'quranapp-53d85.firebasestorage.app',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAkPCiM2f4ZCNfST6e5tgfmTymiMK-M-rQ',
-    appId: '1:513443381716:ios:64e311010da8ac9abf9641',
-    messagingSenderId: '513443381716',
-    projectId: 'quranapp-53d85',
-    storageBucket: 'quranapp-53d85.firebasestorage.app',
-    iosBundleId: 'com.example.quranapp',
+    apiKey: 'AIzaSyB55diDLXYO94Bt9wGmDqvD9kMoT0BsOaw',
+    appId: '1:193139457493:android:1ea2674379811c15c1d15c',
+    messagingSenderId: '193139457493',
+    projectId: 'learnquran-c09f1',
+    storageBucket: 'learnquran-c09f1.firebasestorage.app',
   );
 }
