@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bangla_quran/screens/main/pages/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bangla_quran/screens/main/pages/memory_page.dart';
@@ -19,6 +20,7 @@ class _MainDashboardState extends State<MainDashboard> {
 
   final List<Widget> _screens = [
     QuranScreen(), // Replace with your screen widgets
+    QuizScreen(),
     MemoryPage(),
     PrayerPage(),
     QiblaPage(),
@@ -57,6 +59,17 @@ class _MainDashboardState extends State<MainDashboard> {
             ),
             BottomNavigationBarItem(
               icon: _currentIndex == 1
+                  ? Image.asset("assets/Icon.png", width: 25, height: 25)
+                  : Image.asset(
+                      "assets/readnocolor.png",
+                      width: 25,
+                      height: 25,
+                    ),
+              label: 'Quiz',
+            ),
+
+            BottomNavigationBarItem(
+              icon: _currentIndex == 2
                   ? Image.asset("assets/Group.png", width: 25, height: 25)
                   : Image.asset("assets/Icon-1.png", width: 25, height: 25),
               label: 'Memorize',
@@ -64,13 +77,13 @@ class _MainDashboardState extends State<MainDashboard> {
 
             BottomNavigationBarItem(
               label: "Prayer",
-              icon: _currentIndex == 2
+              icon: _currentIndex == 3
                   ? Image.asset("assets/prayecolor.png", width: 25, height: 25)
                   : Image.asset("assets/Icon-2.png", width: 25, height: 25),
             ),
             BottomNavigationBarItem(
               label: "Qibla",
-              icon: _currentIndex == 3
+              icon: _currentIndex == 4
                   ? Image.asset("assets/qiblacolor.png", width: 25, height: 25)
                   : Image.asset(
                       "assets/line-md_compass.png",
@@ -80,7 +93,7 @@ class _MainDashboardState extends State<MainDashboard> {
             ),
             BottomNavigationBarItem(
               label: "Settings",
-              icon: _currentIndex == 4
+              icon: _currentIndex == 5
                   ? Icon(Icons.settings, size: 25, color: Color(0xff588B76))
                   : Icon(Icons.settings),
             ),
