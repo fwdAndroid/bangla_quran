@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart' as geo;
-import 'package:quranapp/model/prayer_location.dart';
+import 'package:bangla_quran/model/prayer_location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocationService {

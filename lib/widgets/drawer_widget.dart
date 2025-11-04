@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quranapp/screens/drawer_pages/allah_names.dart';
-import 'package:quranapp/screens/drawer_pages/tasbeeh_counter.dart';
-import 'package:quranapp/widgets/logout_widget.dart';
+import 'package:bangla_quran/screens/drawer_pages/allah_names.dart';
+import 'package:bangla_quran/screens/drawer_pages/tasbeeh_counter.dart';
+import 'package:bangla_quran/widgets/logout_widget.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DrawerWidget extends StatefulWidget {

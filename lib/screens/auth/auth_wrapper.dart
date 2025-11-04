@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'auth_screen.dart';
-import 'package:quranapp/screens/main/main_dashboard.dart';
+import 'package:bangla_quran/screens/main/main_dashboard.dart';
 
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});

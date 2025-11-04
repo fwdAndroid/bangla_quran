@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:quranapp/screens/main/main_dashboard.dart';
-import 'package:quranapp/services/auth_services.dart';
+import 'package:bangla_quran/screens/main/main_dashboard.dart';
+import 'package:bangla_quran/services/auth_services.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 
 class AuthScreen extends StatefulWidget {

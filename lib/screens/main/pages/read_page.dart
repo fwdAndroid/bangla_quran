@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:provider/provider.dart';
-import 'package:quranapp/provider/prayer_time_provider.dart';
-import 'package:quranapp/screens/tab_pages/hijab_tab.dart';
-import 'package:quranapp/screens/tab_pages/page_tab.dart';
-import 'package:quranapp/screens/tab_pages/para_tab.dart';
-import 'package:quranapp/screens/tab_pages/surah_tab.dart';
-import 'package:quranapp/widgets/drawer_widget.dart';
+import 'package:bangla_quran/provider/prayer_time_provider.dart';
+import 'package:bangla_quran/screens/tab_pages/hijab_tab.dart';
+import 'package:bangla_quran/screens/tab_pages/page_tab.dart';
+import 'package:bangla_quran/screens/tab_pages/para_tab.dart';
+import 'package:bangla_quran/screens/tab_pages/surah_tab.dart';
+import 'package:bangla_quran/widgets/drawer_widget.dart';
 
 class ReadPage extends StatefulWidget {
   const ReadPage({super.key});

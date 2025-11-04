@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quranapp/screens/setting/edit_profile.dart';
-import 'package:quranapp/screens/setting/language_setting.dart';
-import 'package:quranapp/widgets/logout_widget.dart';
+import 'package:bangla_quran/screens/setting/edit_profile.dart';
+import 'package:bangla_quran/screens/setting/language_setting.dart';
+import 'package:bangla_quran/widgets/logout_widget.dart';
 import 'package:share_plus/share_plus.dart';
 
 class SettingPage extends StatefulWidget {

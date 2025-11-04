@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:quranapp/screens/qibla/qibla_compass.dart';
+import 'package:bangla_quran/screens/qibla/qibla_compass.dart';
 // import 'package:quranapp/screens/qibla/qibla_map.dart';
-import 'package:quranapp/widgets/loading_indicator_widget.dart';
+import 'package:bangla_quran/widgets/loading_indicator_widget.dart';
 
 class QiblaPage extends StatefulWidget {
   @override

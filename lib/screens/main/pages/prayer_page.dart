@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quranapp/provider/prayer_time_provider.dart';
-import 'package:quranapp/widgets/hijri_widget.dart';
-import 'package:quranapp/widgets/prayer_time_widget.dart';
+import 'package:bangla_quran/provider/prayer_time_provider.dart';
+import 'package:bangla_quran/widgets/hijri_widget.dart';
+import 'package:bangla_quran/widgets/prayer_time_widget.dart';
 
 class PrayerPage extends StatefulWidget {
   const PrayerPage({super.key});

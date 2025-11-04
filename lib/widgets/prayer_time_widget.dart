@@ -1,11 +1,11 @@
 // lib/widgets/prayer_times.dart
+import 'package:bangla_quran/provider/prayer_time_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quranapp/model/prayer_location.dart';
-import 'package:quranapp/model/prayer_model.dart';
-import 'package:quranapp/provider/prayer_time_provider.dart';
+import 'package:bangla_quran/model/prayer_location.dart';
+import 'package:bangla_quran/model/prayer_model.dart';
 
-import 'package:quranapp/screens/locations/location_selector.dart';
+import 'package:bangla_quran/screens/locations/location_selector.dart';
 
 class PrayerTimesWidget extends StatelessWidget {
   const PrayerTimesWidget({super.key});

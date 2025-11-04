@@ -2,7 +2,7 @@ import 'dart:math' show pi;
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:quranapp/widgets/loading_indicator_widget.dart';
+import 'package:bangla_quran/widgets/loading_indicator_widget.dart';
 
 class QiblaPageWidget extends StatelessWidget {
   final _compassSvg = SvgPicture.asset('assets/compass.svg');

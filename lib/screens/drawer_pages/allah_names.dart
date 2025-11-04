@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quranapp/utils/allah_names_utils.dart';
+import 'package:bangla_quran/utils/allah_names_utils.dart';
 
 class AllahNames extends StatefulWidget {
   const AllahNames({super.key});

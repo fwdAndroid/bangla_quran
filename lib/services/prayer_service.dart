@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:quranapp/model/prayer_location.dart';
-import 'package:quranapp/model/prayer_model.dart';
+import 'package:bangla_quran/model/prayer_location.dart';
+import 'package:bangla_quran/model/prayer_model.dart';
 
 class PrayerTimeService {
   static Future<List<PrayerTime>> fetchPrayerTimes(

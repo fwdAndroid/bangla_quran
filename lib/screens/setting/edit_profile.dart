@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:quranapp/screens/main/main_dashboard.dart';
-import 'package:quranapp/utils/show_message_bar.dart';
-import 'package:quranapp/widgets/save_button_widget.dart';
+import 'package:bangla_quran/screens/main/main_dashboard.dart';
+import 'package:bangla_quran/utils/show_message_bar.dart';
+import 'package:bangla_quran/widgets/save_button_widget.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});

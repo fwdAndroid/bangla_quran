@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:quranapp/screens/auth/auth_screen.dart';
-import 'package:quranapp/utils/show_message_bar.dart';
+import 'package:bangla_quran/screens/auth/auth_screen.dart';
+import 'package:bangla_quran/utils/show_message_bar.dart';
 
 class LogoutWidget extends StatelessWidget {
   const LogoutWidget({super.key});

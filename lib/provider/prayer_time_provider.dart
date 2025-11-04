@@ -1,9 +1,9 @@
 // lib/providers/prayer_time_provider.dart
 import 'package:flutter/material.dart';
-import 'package:quranapp/model/prayer_location.dart';
-import 'package:quranapp/model/prayer_model.dart';
-import 'package:quranapp/services/location_service.dart';
-import 'package:quranapp/services/prayer_service.dart';
+import 'package:bangla_quran/model/prayer_location.dart';
+import 'package:bangla_quran/model/prayer_model.dart';
+import 'package:bangla_quran/services/location_service.dart';
+import 'package:bangla_quran/services/prayer_service.dart';
 
 class PrayerTimeProvider with ChangeNotifier {
   final LocationService _locationService = LocationService();

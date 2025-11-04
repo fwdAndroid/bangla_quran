@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:quranapp/screens/main/pages/memory_page.dart';
-import 'package:quranapp/screens/main/pages/prayer_page.dart';
-import 'package:quranapp/screens/main/pages/qibla_page.dart';
-import 'package:quranapp/screens/main/pages/read_page.dart';
-import 'package:quranapp/screens/main/pages/setting_page.dart';
+import 'package:bangla_quran/screens/main/pages/memory_page.dart';
+import 'package:bangla_quran/screens/main/pages/prayer_page.dart';
+import 'package:bangla_quran/screens/main/pages/qibla_page.dart';
+import 'package:bangla_quran/screens/main/pages/read_page.dart';
+import 'package:bangla_quran/screens/main/pages/setting_page.dart';
 
 class MainDashboard extends StatefulWidget {
   const MainDashboard({super.key});

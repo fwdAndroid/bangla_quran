@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quranapp/screens/tab_pages/dua_tab.dart';
-import 'package:quranapp/screens/tab_pages/zikr_tab.dart';
+import 'package:bangla_quran/screens/tab_pages/dua_tab.dart';
+import 'package:bangla_quran/screens/tab_pages/zikr_tab.dart';
 
 class MemoryPage extends StatefulWidget {
   const MemoryPage({super.key});

@@ -1,7 +1,7 @@
 // lib/screens/location_selector.dart
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as geo;
-import 'package:quranapp/model/prayer_location.dart';
+import 'package:bangla_quran/model/prayer_location.dart';
 
 class LocationSelector extends StatefulWidget {
   @override
