@@ -32,7 +32,7 @@ class _QariCustomTileState extends State<QariCustomTile> {
               child: Text(
                 '${widget.index + 1}', // show 1,2,3,...
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -44,7 +44,7 @@ class _QariCustomTileState extends State<QariCustomTile> {
             child: Text(
               widget.qari.name!,
               // 'Res',
-              style: const TextStyle(color: Colors.white, fontSize: 14),
+              style: const TextStyle(color: Colors.black, fontSize: 14),
               overflow: TextOverflow.fade,
             ),
           ),
