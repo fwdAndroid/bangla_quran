@@ -18,7 +18,7 @@ class _MainDashboardState extends State<MainDashboard> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    ReadPage(), // Replace with your screen widgets
+    QuranScreen(), // Replace with your screen widgets
     MemoryPage(),
     PrayerPage(),
     QiblaPage(),
