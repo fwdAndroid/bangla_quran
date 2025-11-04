@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:bangla_quran/screens/main/pages/memory_page.dart';
 import 'package:bangla_quran/screens/main/pages/prayer_page.dart';
 import 'package:bangla_quran/screens/main/pages/qibla_page.dart';
-import 'package:bangla_quran/screens/main/pages/read_page.dart';
+import 'package:bangla_quran/screens/main/pages/quran_screen.dart';
 import 'package:bangla_quran/screens/main/pages/setting_page.dart';
 
 class MainDashboard extends StatefulWidget {
