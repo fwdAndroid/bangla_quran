@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bangla_quran/model/surah_model.dart';
 import 'package:bangla_quran/screens/details/surah_detail_screen.dart';
+import 'package:bangla_quran/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -61,6 +62,7 @@ class _QuranScreenState extends State<QuranScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerWidget(),
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.all(8.0),
