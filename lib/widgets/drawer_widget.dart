@@ -1,3 +1,4 @@
+import 'package:bangla_quran/screens/drawer_pages/hadith_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bangla_quran/screens/drawer_pages/allah_names.dart';
 import 'package:bangla_quran/screens/drawer_pages/tasbeeh_counter.dart';
@@ -69,6 +70,18 @@ class _DrawerWidgetState extends State<DrawerWidget>
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => TasbeehCounterPage()),
+              );
+            },
+          ),
+          Divider(),
+
+          ListTile(
+            leading: Icon(Icons.book),
+            title: Text('Hadith'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HadithScreen()),
               );
             },
           ),
