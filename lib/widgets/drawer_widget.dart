@@ -1,3 +1,4 @@
+import 'package:bangla_quran/screens/audio/audio_quran.dart';
 import 'package:bangla_quran/screens/drawer_pages/hadith_screen.dart';
 import 'package:bangla_quran/screens/drawer_pages/live_chat.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,17 @@ class _DrawerWidgetState extends State<DrawerWidget>
             padding: const EdgeInsets.all(8.0),
             child: Divider(color: Colors.grey),
           ),
+          ListTile(
+            leading: Icon(Icons.book),
+            title: Text('Audio Quran'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AudioQuran()),
+              );
+            },
+          ),
+          Divider(),
 
           ListTile(
             leading: Icon(Icons.book),
