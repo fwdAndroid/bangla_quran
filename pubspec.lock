@@ -206,6 +206,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.3"
+  flutter_highlight_text:
+    dependency: "direct main"
+    description:
+      name: flutter_highlight_text
+      sha256: "543e784924f8682299e2bc39051e4845f11d5c70d7ecccebfedd13d2d7d7f3b6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   flutter_lints:
     dependency: "direct dev"
     description:
