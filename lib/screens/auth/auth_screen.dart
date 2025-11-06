@@ -1,8 +1,10 @@
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bangla_quran/screens/main/main_dashboard.dart';
 import 'package:bangla_quran/services/auth_services.dart';
+import 'package:provider/provider.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -77,6 +79,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -85,8 +89,9 @@ class _AuthScreenState extends State<AuthScreen> {
           child: Column(
             children: [
               const SizedBox(height: 30),
-              const ArabicText(
-                'Learn Quran',
+              ArabicText(
+                languageProvider.localizedStrings["Learn Quran"] ??
+                    'Learn Quran',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -94,8 +99,10 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              const ArabicText(
-                'Log in or register to\nsave your progress',
+              ArabicText(
+                languageProvider
+                        .localizedStrings["Log in or register to\nsave your progress"] ??
+                    'Log in or register to\nsave your progress',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey, fontSize: 16),
               ),
@@ -147,7 +154,8 @@ class _AuthScreenState extends State<AuthScreen> {
                                 : Border.all(color: Colors.transparent),
                           ),
                           child: ArabicText(
-                            'Register',
+                            languageProvider.localizedStrings["Register"] ??
+                                'Register',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: !isLogin ? Colors.black : Colors.grey,
@@ -162,15 +170,20 @@ class _AuthScreenState extends State<AuthScreen> {
               const SizedBox(height: 20),
 
               /// Email Field
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
-                child: ArabicText("Email address"),
+                child: ArabicText(
+                  languageProvider.localizedStrings["Email address"] ??
+                      "Email address",
+                ),
               ),
               const SizedBox(height: 5),
               TextField(
                 controller: emailController,
                 decoration: InputDecoration(
-                  hintText: "Your email",
+                  hintText:
+                      languageProvider.localizedStrings["Your Email"] ??
+                      "Your email",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -180,15 +193,19 @@ class _AuthScreenState extends State<AuthScreen> {
 
               /// Username only in Register
               if (!isLogin) ...[
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
-                  child: ArabicText("Username"),
+                  child: ArabicText(
+                    languageProvider.localizedStrings["Username"] ?? "Username",
+                  ),
                 ),
                 const SizedBox(height: 5),
                 TextField(
                   controller: usernameController,
                   decoration: InputDecoration(
-                    hintText: "Your username",
+                    hintText:
+                        languageProvider.localizedStrings["Your username"] ??
+                        "Your username",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -198,16 +215,20 @@ class _AuthScreenState extends State<AuthScreen> {
               ],
 
               /// Password
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
-                child: ArabicText("Password"),
+                child: ArabicText(
+                  languageProvider.localizedStrings["Password"] ?? "Password",
+                ),
               ),
               const SizedBox(height: 5),
               TextField(
                 controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
-                  hintText: "Password",
+                  hintText:
+                      languageProvider.localizedStrings["Password"] ??
+                      "Password",
                   suffixIcon: Icon(Icons.visibility_off),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -216,12 +237,13 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
 
               if (isLogin)
-                const Align(
+                Align(
                   alignment: Alignment.centerRight,
                   child: Padding(
                     padding: EdgeInsets.only(top: 8.0),
                     child: ArabicText(
-                      "Forgot password?",
+                      languageProvider.localizedStrings["Forgot password?"] ??
+                          "Forgot password?",
                       style: TextStyle(fontSize: 13),
                     ),
                   ),

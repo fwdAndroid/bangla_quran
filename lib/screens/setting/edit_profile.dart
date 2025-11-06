@@ -1,3 +1,4 @@
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:bangla_quran/screens/main/main_dashboard.dart';
 import 'package:bangla_quran/utils/show_message_bar.dart';
 import 'package:bangla_quran/widgets/save_button_widget.dart';
+import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -38,9 +40,16 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(centerTitle: true, title: Text("Edit Profile")),
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            languageProvider.localizedStrings['Edit Profile'] ?? "Edit Profile",
+          ),
+        ),
         body: Column(
           children: [
             // Profile Image Section
@@ -55,7 +64,9 @@ class _EditProfileState extends State<EditProfile> {
               child: TextField(
                 controller: nameController,
                 decoration: InputDecoration(
-                  hintText: "Your Name",
+                  hintText:
+                      languageProvider.localizedStrings['Your Name'] ??
+                      "Your Name",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -75,7 +86,9 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     )
                   : SaveButton(
-                      title: "Edit Profile",
+                      title:
+                          languageProvider.localizedStrings['Edit Profile'] ??
+                          "Edit Profile",
                       onTap: () async {
                         setState(() {
                           _isLoading = true;
@@ -87,13 +100,17 @@ class _EditProfileState extends State<EditProfile> {
                               .doc(FirebaseAuth.instance.currentUser!.uid)
                               .update({"username": nameController.text});
                           showMessageBar(
-                            "Successfully Updated Profile",
+                            languageProvider
+                                    .localizedStrings['Successfully Updated Profile'] ??
+                                "Successfully Updated Profile",
                             context,
                           );
                         } catch (e) {
                           print("Error updating profile: $e");
                           showMessageBar(
-                            "Profile could not be updated",
+                            languageProvider
+                                    .localizedStrings['Profile could not be updated'] ??
+                                "Profile could not be updated",
                             context,
                           );
                         } finally {

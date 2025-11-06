@@ -1,3 +1,4 @@
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class _PrayerPageState extends State<PrayerPage> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<PrayerTimeProvider>(context, listen: false);
+    final languageProvider = Provider.of<LanguageProvider>(context);
 
     // Load data if not already loaded
     if (provider.prayerTimes.isEmpty && !provider.isLoading) {
@@ -26,8 +28,8 @@ class _PrayerPageState extends State<PrayerPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const ArabicText(
-          'Prayer Times',
+        title: ArabicText(
+          languageProvider.localizedStrings["Prayer Times"] ?? 'Prayer Times',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color(0xFF1D3B2A),

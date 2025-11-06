@@ -1,8 +1,10 @@
 // lib/screens/location_selector.dart
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as geo;
 import 'package:bangla_quran/model/prayer_location.dart';
+import 'package:provider/provider.dart';
 
 class LocationSelector extends StatefulWidget {
   @override
@@ -57,8 +59,15 @@ class _LocationSelectorState extends State<LocationSelector> {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return Scaffold(
-      appBar: AppBar(title: const ArabicText('Select Location')),
+      appBar: AppBar(
+        title: ArabicText(
+          languageProvider.localizedStrings["Select Location"] ??
+              'Select Location',
+        ),
+      ),
       body: Column(
         children: [
           Padding(
@@ -66,7 +75,10 @@ class _LocationSelectorState extends State<LocationSelector> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search for a city or location',
+                hintText:
+                    languageProvider
+                        .localizedStrings["Search for a city or location"] ??
+                    'Search for a city or location',
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),

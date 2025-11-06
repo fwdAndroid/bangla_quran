@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' show pi;
 
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:bangla_quran/widgets/loading_indicator_widget.dart';
 import 'package:bangla_quran/widgets/location_error_widget.dart';
+import 'package:provider/provider.dart';
 
 class QiblahCompass extends StatefulWidget {
   @override
@@ -35,6 +37,8 @@ class _QiblahCompassState extends State<QiblahCompass> {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return Container(
       alignment: Alignment.center,
       padding: const EdgeInsets.all(8.0),
@@ -51,12 +55,18 @@ class _QiblahCompassState extends State<QiblahCompass> {
 
               case LocationPermission.denied:
                 return LocationErrorWidget(
-                  error: "Location service permission denied",
+                  error:
+                      languageProvider
+                          .localizedStrings['Location service permission denied'] ??
+                      "Location service permission denied",
                   callback: _checkLocationStatus,
                 );
               case LocationPermission.deniedForever:
                 return LocationErrorWidget(
-                  error: "Location service Denied Forever !",
+                  error:
+                      languageProvider
+                          .localizedStrings['Location service Denied Forever !'] ??
+                      "Location service Denied Forever !",
                   callback: _checkLocationStatus,
                 );
               // case GeolocationStatus.unknown:
@@ -69,7 +79,10 @@ class _QiblahCompassState extends State<QiblahCompass> {
             }
           } else {
             return LocationErrorWidget(
-              error: "Please enable Location service",
+              error:
+                  languageProvider
+                      .localizedStrings['Please enable Location service'] ??
+                  "Please enable Location service",
               callback: _checkLocationStatus,
             );
           }

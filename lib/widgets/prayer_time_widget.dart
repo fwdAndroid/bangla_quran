@@ -1,4 +1,5 @@
 // lib/widgets/prayer_times.dart
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/provider/prayer_time_provider.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class PrayerTimesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<PrayerTimeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -35,8 +37,9 @@ class PrayerTimesWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const ArabicText(
-                'Prayer Times',
+              ArabicText(
+                languageProvider.localizedStrings['Prayer Times'] ??
+                    'Prayer Times',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -73,7 +76,10 @@ class PrayerTimesWidget extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: provider.resetToCurrentLocation,
-                    child: const ArabicText('Reset to Current'),
+                    child: ArabicText(
+                      languageProvider.localizedStrings['Reset to Current'] ??
+                          'Reset to Current',
+                    ),
                   ),
                 ],
               ),

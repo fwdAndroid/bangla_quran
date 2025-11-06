@@ -1,6 +1,8 @@
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/screens/main/main_dashboard.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ScoreScreen extends StatelessWidget {
   final int score;
@@ -9,6 +11,8 @@ class ScoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -26,7 +30,7 @@ class ScoreScreen extends StatelessWidget {
             Icon(Icons.emoji_events, size: 100, color: Colors.white),
             SizedBox(height: 20),
             ArabicText(
-              'Your Score',
+              languageProvider.localizedStrings['Your Score'] ?? 'Your Score',
               style: TextStyle(color: Colors.white, fontSize: 28),
             ),
             SizedBox(height: 20),
@@ -48,7 +52,7 @@ class ScoreScreen extends StatelessWidget {
                 ),
               ),
               child: ArabicText(
-                'Play Again',
+                languageProvider.localizedStrings['Play Again'] ?? 'Play Again',
                 style: TextStyle(color: Colors.green, fontSize: 20),
               ),
               onPressed: () {

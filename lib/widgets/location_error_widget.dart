@@ -1,5 +1,7 @@
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LocationErrorWidget extends StatelessWidget {
   final String? error;
@@ -10,6 +12,8 @@ class LocationErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     final box = SizedBox(height: 32);
     final errorColor = Color(0xffb00020);
 
@@ -26,7 +30,9 @@ class LocationErrorWidget extends StatelessWidget {
             ),
             box,
             ElevatedButton(
-              child: ArabicText("Retry"),
+              child: ArabicText(
+                languageProvider.localizedStrings["Retry"] ?? "Retry",
+              ),
               onPressed: () {
                 if (callback != null) callback!();
               },

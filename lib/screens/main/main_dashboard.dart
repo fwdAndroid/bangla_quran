@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/screens/main/pages/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,7 @@ import 'package:bangla_quran/screens/main/pages/prayer_page.dart';
 import 'package:bangla_quran/screens/main/pages/qibla_page.dart';
 import 'package:bangla_quran/screens/main/pages/quran_screen.dart';
 import 'package:bangla_quran/screens/main/pages/setting_page.dart';
+import 'package:provider/provider.dart';
 
 class MainDashboard extends StatefulWidget {
   const MainDashboard({super.key});
@@ -28,6 +30,8 @@ class _MainDashboardState extends State<MainDashboard> {
   ];
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return WillPopScope(
       onWillPop: () async {
         final shouldPop = await _showExitDialog(context);
@@ -55,7 +59,7 @@ class _MainDashboardState extends State<MainDashboard> {
                       width: 25,
                       height: 25,
                     ),
-              label: 'Home',
+              label: languageProvider.localizedStrings["Home"] ?? 'Home',
             ),
             BottomNavigationBarItem(
               icon: _currentIndex == 1
@@ -65,18 +69,19 @@ class _MainDashboardState extends State<MainDashboard> {
                       width: 25,
                       height: 25,
                     ),
-              label: 'Quiz',
+              label: languageProvider.localizedStrings["Quiz"] ?? 'Quiz',
             ),
 
             BottomNavigationBarItem(
               icon: _currentIndex == 2
                   ? Image.asset("assets/Group.png", width: 25, height: 25)
                   : Image.asset("assets/Icon-1.png", width: 25, height: 25),
-              label: 'Memorize',
+              label:
+                  languageProvider.localizedStrings["Memorize"] ?? 'Memorize',
             ),
 
             BottomNavigationBarItem(
-              label: "Prayer",
+              label: languageProvider.localizedStrings["Prayer"] ?? "Prayer",
               icon: _currentIndex == 3
                   ? Image.asset("assets/prayecolor.png", width: 25, height: 25)
                   : Image.asset("assets/Icon-2.png", width: 25, height: 25),
@@ -92,7 +97,8 @@ class _MainDashboardState extends State<MainDashboard> {
                     ),
             ),
             BottomNavigationBarItem(
-              label: "Settings",
+              label:
+                  languageProvider.localizedStrings["Settings"] ?? "Settings",
               icon: _currentIndex == 5
                   ? Icon(Icons.settings, size: 25, color: Color(0xff588B76))
                   : Icon(Icons.settings),

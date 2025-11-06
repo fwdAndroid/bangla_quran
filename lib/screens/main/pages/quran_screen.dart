@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:bangla_quran/model/surah_model.dart';
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/screens/details/surah_detail_screen.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:bangla_quran/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class QuranScreen extends StatefulWidget {
   const QuranScreen({super.key});
@@ -66,14 +68,17 @@ class _QuranScreenState extends State<QuranScreen>
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return Scaffold(
       drawer: const DrawerWidget(),
       //   backgroundColor: Colors.yellow[700],
       appBar: AppBar(
         backgroundColor: Colors.yellow[700],
         elevation: 0,
-        title: const ArabicText(
-          'আল কুরআন (সূরা ক্রমে)',
+        title: ArabicText(
+          languageProvider.localizedStrings["Al Quran (in Surah order)"] ??
+              'Al Quran (in Surah order)',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,

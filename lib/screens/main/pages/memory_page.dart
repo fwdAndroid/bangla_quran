@@ -1,7 +1,9 @@
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bangla_quran/screens/tab_pages/dua_tab.dart';
 import 'package:bangla_quran/screens/tab_pages/zikr_tab.dart';
+import 'package:provider/provider.dart';
 
 class MemoryPage extends StatefulWidget {
   const MemoryPage({super.key});
@@ -13,6 +15,8 @@ class MemoryPage extends StatefulWidget {
 class _MemoryPageState extends State<MemoryPage> {
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -26,8 +30,10 @@ class _MemoryPageState extends State<MemoryPage> {
             indicatorColor: Color(0xFF1D3B2A),
             dividerColor: Colors.grey,
             tabs: [
-              Tab(text: 'Dua'),
-              Tab(text: 'Zikr'),
+              Tab(text: languageProvider.localizedStrings["Dua"] ?? 'Dua'),
+              Tab(
+                text: languageProvider.localizedStrings["Hadith"] ?? 'Hadith',
+              ),
             ],
           ),
         ),

@@ -1,9 +1,11 @@
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/screens/setting/font_setting.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bangla_quran/screens/setting/edit_profile.dart';
 import 'package:bangla_quran/screens/setting/language_setting.dart';
 import 'package:bangla_quran/widgets/logout_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class SettingPage extends StatefulWidget {
@@ -16,6 +18,8 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -24,8 +28,8 @@ class _SettingPageState extends State<SettingPage> {
               padding: const EdgeInsets.all(8.0),
               child: Image.asset("assets/logo.png", height: 150),
             ),
-            const ArabicText(
-              'Learn Quran',
+            ArabicText(
+              languageProvider.localizedStrings["Learn Quran"] ?? 'Learn Quran',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -42,7 +46,10 @@ class _SettingPageState extends State<SettingPage> {
                   );
                 },
                 trailing: Icon(Icons.arrow_forward_ios),
-                title: ArabicText("Edit Profile"),
+                title: ArabicText(
+                  languageProvider.localizedStrings["Edit Profile"] ??
+                      "Edit Profile",
+                ),
                 leading: Icon(Icons.person, color: Color(0xFF1D3B2A)),
               ),
             ),
@@ -55,7 +62,10 @@ class _SettingPageState extends State<SettingPage> {
                   );
                 },
                 trailing: Icon(Icons.arrow_forward_ios),
-                title: ArabicText("Change Language"),
+                title: ArabicText(
+                  languageProvider.localizedStrings["Change Language"] ??
+                      "Change Language",
+                ),
                 leading: Icon(Icons.language, color: Color(0xFF1D3B2A)),
               ),
             ),
@@ -70,7 +80,10 @@ class _SettingPageState extends State<SettingPage> {
                   );
                 },
                 trailing: Icon(Icons.arrow_forward_ios),
-                title: ArabicText("Font Setting"),
+                title: ArabicText(
+                  languageProvider.localizedStrings["Font Setting"] ??
+                      "Font Setting",
+                ),
                 leading: Icon(
                   Icons.font_download_sharp,
                   color: Color(0xFF1D3B2A),
@@ -83,7 +96,10 @@ class _SettingPageState extends State<SettingPage> {
                   shareApp();
                 },
                 trailing: Icon(Icons.arrow_forward_ios),
-                title: ArabicText("Invite Friends"),
+                title: ArabicText(
+                  languageProvider.localizedStrings["Invite Friends"] ??
+                      "Invite Friends",
+                ),
                 leading: Icon(Icons.share, color: Color(0xFF1D3B2A)),
               ),
             ),
@@ -98,7 +114,9 @@ class _SettingPageState extends State<SettingPage> {
                   );
                 },
                 trailing: Icon(Icons.arrow_forward_ios),
-                title: ArabicText("Logout"),
+                title: ArabicText(
+                  languageProvider.localizedStrings["Logout"] ?? "Logout",
+                ),
                 leading: Icon(Icons.logout, color: Colors.red),
               ),
             ),

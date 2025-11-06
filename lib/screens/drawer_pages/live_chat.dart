@@ -1,8 +1,10 @@
 import 'package:bangla_quran/chat/chat_screen.dart';
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LiveChat extends StatefulWidget {
   const LiveChat({super.key});
@@ -39,6 +41,8 @@ class _LiveChatState extends State<LiveChat> {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     if (userName == null) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -46,7 +50,10 @@ class _LiveChatState extends State<LiveChat> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
-        title: ArabicText("Live Chat", style: TextStyle(color: Colors.black)),
+        title: ArabicText(
+          languageProvider.localizedStrings["Live Chat"] ?? "Live Chat",
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance

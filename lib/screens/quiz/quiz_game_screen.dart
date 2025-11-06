@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/screens/quiz/score_screen.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class QuizGameScreen extends StatefulWidget {
   const QuizGameScreen({super.key});
@@ -97,11 +99,16 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     if (randomizedQuizzes.isEmpty) {
       return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.white),
-          title: ArabicText('Quiz', style: TextStyle(color: Colors.white)),
+          title: ArabicText(
+            languageProvider.localizedStrings['Quiz'] ?? 'Quiz',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         body: Center(child: CircularProgressIndicator()),
       );

@@ -1,6 +1,8 @@
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/screens/quiz/quiz_game_screen.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
@@ -12,6 +14,8 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -28,7 +32,8 @@ class _QuizScreenState extends State<QuizScreen> {
             Icon(Icons.quiz, size: 120, color: Colors.white),
             SizedBox(height: 20),
             ArabicText(
-              'Islamic Quiz',
+              languageProvider.localizedStrings["Islamic Quiz"] ??
+                  'Islamic Quiz',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 36,
@@ -45,7 +50,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
               ),
               child: ArabicText(
-                'Play Quiz',
+                languageProvider.localizedStrings["Play Quiz"] ?? 'Play Quiz',
                 style: TextStyle(color: Colors.green, fontSize: 20),
               ),
               onPressed: () {

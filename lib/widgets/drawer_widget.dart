@@ -1,3 +1,4 @@
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/screens/audio/audio_quran.dart';
 import 'package:bangla_quran/screens/drawer_pages/hadith_screen.dart';
 import 'package:bangla_quran/screens/drawer_pages/live_chat.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:bangla_quran/screens/drawer_pages/allah_names.dart';
 import 'package:bangla_quran/screens/drawer_pages/tasbeeh_counter.dart';
 import 'package:bangla_quran/widgets/logout_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -33,6 +35,8 @@ class _DrawerWidgetState extends State<DrawerWidget>
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return Drawer(
       child: Column(
         children: [
@@ -43,7 +47,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
           Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8),
             child: ArabicText(
-              "Learn Quran",
+              languageProvider.localizedStrings["Learn Quran"] ?? "Learn Quran",
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -57,7 +61,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
           ),
           ListTile(
             leading: Icon(Icons.book),
-            title: ArabicText('Audio Quran'),
+            title: ArabicText(
+              languageProvider.localizedStrings["Audio Quran"] ?? 'Audio Quran',
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -69,7 +75,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
 
           ListTile(
             leading: Icon(Icons.book),
-            title: ArabicText('Live Chat'),
+            title: ArabicText(
+              languageProvider.localizedStrings["Live Chat"] ?? 'Live Chat',
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -81,7 +89,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
 
           ListTile(
             leading: Icon(Icons.format_list_bulleted),
-            title: ArabicText('Allah Names'),
+            title: ArabicText(
+              languageProvider.localizedStrings["Allah Names"] ?? 'Allah Names',
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -92,7 +102,10 @@ class _DrawerWidgetState extends State<DrawerWidget>
           Divider(),
           ListTile(
             leading: Icon(Icons.fingerprint),
-            title: ArabicText('Tasbeeh Counter'),
+            title: ArabicText(
+              languageProvider.localizedStrings["Tasbeeh Counter"] ??
+                  'Tasbeeh Counter',
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -104,7 +117,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
 
           ListTile(
             leading: Icon(Icons.book),
-            title: ArabicText('Hadith'),
+            title: ArabicText(
+              languageProvider.localizedStrings["Hadith"] ?? 'Hadith',
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -118,7 +133,10 @@ class _DrawerWidgetState extends State<DrawerWidget>
             onTap: () {
               shareApp();
             },
-            title: ArabicText("Invite Friends"),
+            title: ArabicText(
+              languageProvider.localizedStrings["Invite Friends"] ??
+                  "Invite Friends",
+            ),
             leading: Icon(Icons.share, color: Color(0xFF1D3B2A)),
           ),
           Divider(),
@@ -131,7 +149,9 @@ class _DrawerWidgetState extends State<DrawerWidget>
                 },
               );
             },
-            title: ArabicText("Logout"),
+            title: ArabicText(
+              languageProvider.localizedStrings["Logout"] ?? "Logout",
+            ),
             leading: Icon(Icons.logout, color: Colors.red),
           ),
         ],

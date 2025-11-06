@@ -1,19 +1,23 @@
 import 'package:bangla_quran/model/allah_model.dart';
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/utils/all_names_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AllahNamesScreen extends StatelessWidget {
   const AllahNamesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     final List<AllahName> names = allahNames;
 
     return Scaffold(
       backgroundColor: Colors.yellow[50],
       appBar: AppBar(
-        title: const Text(
-          'আল্লাহর ৯৯ নাম',
+        title: Text(
+          languageProvider.localizedStrings["Allah Names"] ?? 'Allah Names',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,

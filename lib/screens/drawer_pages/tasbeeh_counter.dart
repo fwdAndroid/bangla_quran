@@ -1,5 +1,7 @@
+import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TasbeehCounterPage extends StatefulWidget {
   @override
@@ -23,13 +25,23 @@ class _TasbeehCounterPageState extends State<TasbeehCounterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return Scaffold(
-      appBar: AppBar(title: ArabicText('Tasbeeh Counter')),
+      appBar: AppBar(
+        title: ArabicText(
+          languageProvider.localizedStrings["Tasbeeh Counter"] ??
+              'Tasbeeh Counter',
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ArabicText('Count', style: TextStyle(fontSize: 24)),
+            ArabicText(
+              languageProvider.localizedStrings["Count"] ?? 'Count',
+              style: TextStyle(fontSize: 24),
+            ),
             ArabicText(
               '$counter',
               style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
@@ -37,14 +49,19 @@ class _TasbeehCounterPageState extends State<TasbeehCounterPage> {
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: incrementCounter,
-              child: ArabicText('Tasbeeh'),
+              child: ArabicText(
+                languageProvider.localizedStrings["Tasbeeh"] ?? 'Tasbeeh',
+              ),
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
               ),
             ),
             TextButton(
               onPressed: resetCounter,
-              child: ArabicText('Reset', style: TextStyle(color: Colors.red)),
+              child: ArabicText(
+                languageProvider.localizedStrings["Reset"] ?? 'Reset',
+                style: TextStyle(color: Colors.red),
+              ),
             ),
           ],
         ),
