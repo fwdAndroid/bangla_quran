@@ -12,28 +12,31 @@ class QuranScreen extends StatefulWidget {
   State<QuranScreen> createState() => _QuranScreenState();
 }
 
-class _QuranScreenState extends State<QuranScreen> {
+class _QuranScreenState extends State<QuranScreen>
+    with SingleTickerProviderStateMixin {
   List<Surah> allSurahs = [];
   List<Surah> filteredSurahs = [];
-  TextEditingController searchController = TextEditingController();
   bool isLoading = true;
   bool isError = false;
+
+  late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
     fetchSurahs();
-    searchController.addListener(_onSearchChanged);
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    )..repeat(reverse: true);
   }
 
   @override
   void dispose() {
-    searchController.removeListener(_onSearchChanged);
-    searchController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
-  /// Fetches Surahs from the online JSON
   Future<void> fetchSurahs() async {
     try {
       final response = await http.get(
@@ -60,94 +63,196 @@ class _QuranScreenState extends State<QuranScreen> {
     }
   }
 
-  /// Handles text search input changes
-  void _onSearchChanged() {
-    String query = searchController.text.toLowerCase().trim();
-    setState(() {
-      filteredSurahs = allSurahs.where((surah) {
-        final name = surah.name.toLowerCase();
-        final transliteration = surah.transliteration.toLowerCase();
-        final translation = surah.translation.toLowerCase();
-        final number = surah.toString();
-        return name.contains(query) ||
-            transliteration.contains(query) ||
-            translation.contains(query) ||
-            number.startsWith(query);
-      }).toList();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const DrawerWidget(),
+      //   backgroundColor: Colors.yellow[700],
       appBar: AppBar(
-        backgroundColor: Colors.green[700],
-        title: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            controller: searchController,
-            decoration: InputDecoration(
-              hintText: 'Search Surah by name, translation, or number...',
-              prefixIcon: const Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              filled: true,
-              fillColor: Colors.white,
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 12,
+        backgroundColor: Colors.yellow[700],
+        elevation: 0,
+        title: const Text(
+          'আল কুরআন (সূরা ক্রমে)',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 12),
+            child: Icon(Icons.search, color: Colors.black),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          // Green Basmallah header
+          Container(
+            width: double.infinity,
+            color: Colors.green[700],
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            child: const Center(
+              child: Text(
+                'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.yellow,
+                  fontFamily: 'Amiri',
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
-        ),
-      ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : isError
-          ? const Center(child: Text('Failed to load Surahs'))
-          : filteredSurahs.isEmpty
-          ? const Center(child: Text('No Surah found'))
-          : ListView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              itemCount: filteredSurahs.length,
-              itemBuilder: (context, index) {
-                var surah = filteredSurahs[index];
-                return Card(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 5,
-                  ),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.green[700],
-                      child: Text(
-                        '${surah.id}',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    title: Text(
-                      surah.transliteration,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text('${surah.translation} • ${surah.name}'),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.black,
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => SurahDetailScreen(surah: surah),
+
+          // Surah List
+          Expanded(
+            child: isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : isError
+                ? const Center(child: Text('ডাটা লোড করতে ব্যর্থ হয়েছে'))
+                : ListView.separated(
+                    itemCount: filteredSurahs.length,
+                    separatorBuilder: (context, index) =>
+                        AnimatedGradientDivider(controller: _controller),
+                    itemBuilder: (context, index) {
+                      var surah = filteredSurahs[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (builder) =>
+                                  SurahDetailScreen(surah: surah),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          color: Colors.white,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 10,
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              // Surah number circle
+                              Container(
+                                width: 42,
+                                height: 42,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.brown.shade400,
+                                    width: 2.5,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${surah.id}',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.brown,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+
+                              // Surah title and translation
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      surah.transliteration,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 3),
+                                    Text(
+                                      surah.translation,
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.grey[700],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              // Arabic name
+                              Padding(
+                                padding: const EdgeInsets.only(right: 6),
+                                child: Text(
+                                  surah.name,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: 'Amiri',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+
+                              // Trailing icon
+                              Icon(
+                                index == 2
+                                    ? Icons.access_time
+                                    : Icons.cloud_download_outlined,
+                                color: Colors.grey[600],
+                                size: 22,
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },
                   ),
-                );
-              },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// 🌟 Animated Gradient Divider (Shimmer Center Effect)
+class AnimatedGradientDivider extends StatelessWidget {
+  final AnimationController controller;
+
+  const AnimatedGradientDivider({super.key, required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, child) {
+        final shimmerValue = (controller.value - 0.5).abs() * 2;
+        final brightCenter = Color.lerp(
+          Colors.yellow.shade600,
+          Colors.yellow.shade300,
+          shimmerValue,
+        )!;
+        return Container(
+          height: 3,
+          margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 4),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.yellow.shade200,
+                brightCenter,
+                brightCenter,
+                Colors.yellow.shade200,
+              ],
+              stops: const [0.0, 0.4, 0.6, 1.0],
             ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+        );
+      },
     );
   }
 }
