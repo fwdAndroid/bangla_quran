@@ -2,6 +2,7 @@ import 'package:bangla_quran/api/api_calls.dart';
 import 'package:bangla_quran/model/qari_model.dart';
 import 'package:bangla_quran/screens/audio/audio_screen.dart';
 import 'package:bangla_quran/screens/audio/surrah_model.dart' as surah;
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:bangla_quran/widgets/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,7 @@ class _AudioSurahScreenState extends State<AudioSurahScreen> {
           backgroundColor: Colors.white,
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.black),
-          title: Text(
+          title: ArabicText(
             'Surah List',
             style: TextStyle(
               color: Colors.black,
@@ -108,7 +109,7 @@ Widget AudioTile({
                 shape: BoxShape.circle,
                 color: Colors.green,
               ),
-              child: Text(
+              child: ArabicText(
                 (number).toString(),
                 style: TextStyle(
                   color: Colors.black,
@@ -121,7 +122,7 @@ Widget AudioTile({
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                ArabicText(
                   surahName!,
                   textAlign: TextAlign.end,
                   style: TextStyle(
@@ -131,7 +132,7 @@ Widget AudioTile({
                   ),
                 ),
                 SizedBox(height: 3),
-                Text(
+                ArabicText(
                   "Total Aya : $totalAya",
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),

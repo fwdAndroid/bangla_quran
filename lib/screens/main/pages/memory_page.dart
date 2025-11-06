@@ -1,3 +1,4 @@
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bangla_quran/screens/tab_pages/dua_tab.dart';
 import 'package:bangla_quran/screens/tab_pages/zikr_tab.dart';
@@ -16,7 +17,7 @@ class _MemoryPageState extends State<MemoryPage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Memorize'),
+          title: ArabicText('Memorize'),
           bottom: TabBar(
             indicatorAnimation: TabIndicatorAnimation.linear,
             indicatorSize: TabBarIndicatorSize.tab,

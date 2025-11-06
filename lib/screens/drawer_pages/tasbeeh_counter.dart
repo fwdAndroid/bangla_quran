@@ -1,3 +1,4 @@
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 
 class TasbeehCounterPage extends StatefulWidget {
@@ -23,27 +24,27 @@ class _TasbeehCounterPageState extends State<TasbeehCounterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Tasbeeh Counter')),
+      appBar: AppBar(title: ArabicText('Tasbeeh Counter')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Count', style: TextStyle(fontSize: 24)),
-            Text(
+            ArabicText('Count', style: TextStyle(fontSize: 24)),
+            ArabicText(
               '$counter',
               style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: incrementCounter,
-              child: Text('Tasbeeh'),
+              child: ArabicText('Tasbeeh'),
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
               ),
             ),
             TextButton(
               onPressed: resetCounter,
-              child: Text('Reset', style: TextStyle(color: Colors.red)),
+              child: ArabicText('Reset', style: TextStyle(color: Colors.red)),
             ),
           ],
         ),

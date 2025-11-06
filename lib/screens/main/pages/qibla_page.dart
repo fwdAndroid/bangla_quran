@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:geolocator/geolocator.dart';
@@ -64,14 +65,16 @@ class _QiblaPageState extends State<QiblaPage> {
           if (snapshot.connectionState == ConnectionState.waiting)
             return LoadingIndicator();
           if (snapshot.hasError)
-            return Center(child: Text("Error: ${snapshot.error.toString()}"));
+            return Center(
+              child: ArabicText("Error: ${snapshot.error.toString()}"),
+            );
 
           if (snapshot.data != null && snapshot.data == true)
             // Device supports the Sensor, Display Compass widget
             return QiblahCompass();
           else
             // Device does not support the sensor, Display Maps widget
-            return Center(child: Text("Your Device is Not Supported"));
+            return Center(child: ArabicText("Your Device is Not Supported"));
         },
       ),
     );

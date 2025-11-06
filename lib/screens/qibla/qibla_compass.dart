@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' show pi;
 
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -122,7 +123,9 @@ class QiblahCompassWidget extends StatelessWidget {
             ),
             Positioned(
               bottom: 8,
-              child: Text("${qiblahDirection.offset.toStringAsFixed(3)}°"),
+              child: ArabicText(
+                "${qiblahDirection.offset.toStringAsFixed(3)}°",
+              ),
             ),
           ],
         );

@@ -1,3 +1,4 @@
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class _ChangeLangageState extends State<ChangeLangage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text(
+        title: ArabicText(
           languageProvider.localizedStrings['Language'] ?? "Language",
         ),
       ),
@@ -33,7 +34,7 @@ class _ChangeLangageState extends State<ChangeLangage> {
               padding: const EdgeInsets.only(top: 10.0, left: 16),
               child: Align(
                 alignment: AlignmentDirectional.topStart,
-                child: Text(
+                child: ArabicText(
                   languageProvider.localizedStrings['Select Language'] ??
                       'Select Language',
                   style: GoogleFonts.poppins(
@@ -57,7 +58,7 @@ class _ChangeLangageState extends State<ChangeLangage> {
                 color: Colors.black,
                 size: 20,
               ),
-              title: Text(
+              title: ArabicText(
                 languageProvider.localizedStrings['Arabic'] ?? "Arabic",
                 style: GoogleFonts.poppins(color: Colors.black, fontSize: 16),
               ),
@@ -75,7 +76,7 @@ class _ChangeLangageState extends State<ChangeLangage> {
                 color: Colors.black,
                 size: 20,
               ),
-              title: Text(
+              title: ArabicText(
                 languageProvider.localizedStrings['English'] ?? "English",
                 style: GoogleFonts.poppins(color: Colors.black, fontSize: 16),
               ),

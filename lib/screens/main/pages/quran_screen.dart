@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bangla_quran/model/surah_model.dart';
 import 'package:bangla_quran/screens/details/surah_detail_screen.dart';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:bangla_quran/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -71,7 +72,7 @@ class _QuranScreenState extends State<QuranScreen>
       appBar: AppBar(
         backgroundColor: Colors.yellow[700],
         elevation: 0,
-        title: const Text(
+        title: const ArabicText(
           'আল কুরআন (সূরা ক্রমে)',
           style: TextStyle(
             fontSize: 20,
@@ -94,7 +95,7 @@ class _QuranScreenState extends State<QuranScreen>
             color: Colors.green[700],
             padding: const EdgeInsets.symmetric(vertical: 14),
             child: const Center(
-              child: Text(
+              child: ArabicText(
                 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
                 style: TextStyle(
                   fontSize: 22,
@@ -111,7 +112,7 @@ class _QuranScreenState extends State<QuranScreen>
             child: isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : isError
-                ? const Center(child: Text('ডাটা লোড করতে ব্যর্থ হয়েছে'))
+                ? const Center(child: ArabicText('ডাটা লোড করতে ব্যর্থ হয়েছে'))
                 : ListView.separated(
                     itemCount: filteredSurahs.length,
                     separatorBuilder: (context, index) =>
@@ -149,7 +150,7 @@ class _QuranScreenState extends State<QuranScreen>
                                   ),
                                 ),
                                 child: Center(
-                                  child: Text(
+                                  child: ArabicText(
                                     '${surah.id}',
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -165,7 +166,7 @@ class _QuranScreenState extends State<QuranScreen>
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    ArabicText(
                                       surah.transliteration,
                                       style: const TextStyle(
                                         fontSize: 18,
@@ -174,7 +175,7 @@ class _QuranScreenState extends State<QuranScreen>
                                       ),
                                     ),
                                     const SizedBox(height: 3),
-                                    Text(
+                                    ArabicText(
                                       surah.translation,
                                       style: TextStyle(
                                         fontSize: 13,
@@ -188,7 +189,7 @@ class _QuranScreenState extends State<QuranScreen>
                               // Arabic name
                               Padding(
                                 padding: const EdgeInsets.only(right: 6),
-                                child: Text(
+                                child: ArabicText(
                                   surah.name,
                                   style: const TextStyle(
                                     fontSize: 18,

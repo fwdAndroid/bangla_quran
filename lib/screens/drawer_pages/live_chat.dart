@@ -1,4 +1,5 @@
 import 'package:bangla_quran/chat/chat_screen.dart';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class _LiveChatState extends State<LiveChat> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
-        title: Text("Live Chat", style: TextStyle(color: Colors.black)),
+        title: ArabicText("Live Chat", style: TextStyle(color: Colors.black)),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -69,7 +70,9 @@ class _LiveChatState extends State<LiveChat> {
                 children: [
                   Image.asset('assets/logo.png', width: 100),
                   const SizedBox(height: 20),
-                  const Text('No messages yet. Tap admin to start chatting!'),
+                  const ArabicText(
+                    'No messages yet. Tap admin to start chatting!',
+                  ),
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
@@ -100,7 +103,7 @@ class _LiveChatState extends State<LiveChat> {
                         ),
                       );
                     },
-                    child: Text('Chat with AL Quran Live Support'),
+                    child: ArabicText('Chat with AL Quran Live Support'),
                   ),
                 ],
               ),
@@ -117,8 +120,8 @@ class _LiveChatState extends State<LiveChat> {
                   leading: const CircleAvatar(
                     child: Icon(Icons.admin_panel_settings),
                   ),
-                  title: Text("Al Quran Live Support"),
-                  subtitle: Text(chat['lastMessage'] ?? ''),
+                  title: ArabicText("Al Quran Live Support"),
+                  subtitle: ArabicText(chat['lastMessage'] ?? ''),
                   onTap: () {
                     Navigator.push(
                       context,

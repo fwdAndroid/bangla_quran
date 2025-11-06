@@ -1,3 +1,4 @@
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 
 class LocationErrorWidget extends StatelessWidget {
@@ -19,13 +20,13 @@ class LocationErrorWidget extends StatelessWidget {
           children: <Widget>[
             Icon(Icons.location_off, size: 150, color: errorColor),
             box,
-            Text(
+            ArabicText(
               error!,
               style: TextStyle(color: errorColor, fontWeight: FontWeight.bold),
             ),
             box,
             ElevatedButton(
-              child: Text("Retry"),
+              child: ArabicText("Retry"),
               onPressed: () {
                 if (callback != null) callback!();
               },

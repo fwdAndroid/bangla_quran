@@ -1,5 +1,6 @@
 // lib/widgets/prayer_times.dart
 import 'package:bangla_quran/provider/prayer_time_provider.dart';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bangla_quran/model/prayer_location.dart';
@@ -34,7 +35,7 @@ class PrayerTimesWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              const ArabicText(
                 'Prayer Times',
                 style: TextStyle(
                   fontSize: 18,
@@ -65,14 +66,14 @@ class PrayerTimesWidget extends StatelessWidget {
                   const Icon(Icons.location_pin, size: 16, color: Colors.grey),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: Text(
+                    child: ArabicText(
                       provider.currentLocation!.name,
                       style: const TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                   ),
                   TextButton(
                     onPressed: provider.resetToCurrentLocation,
-                    child: const Text('Reset to Current'),
+                    child: const ArabicText('Reset to Current'),
                   ),
                 ],
               ),
@@ -81,7 +82,7 @@ class PrayerTimesWidget extends StatelessWidget {
           if (provider.isLoading)
             const Center(child: CircularProgressIndicator())
           else if (provider.error != null)
-            Text(
+            ArabicText(
               'Error: ${provider.error}',
               style: const TextStyle(color: Colors.red),
             )
@@ -119,7 +120,7 @@ class PrayerTimesWidget extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                 ),
-              Text(
+              ArabicText(
                 prayer.name,
                 style: TextStyle(
                   fontSize: 16,
@@ -133,7 +134,7 @@ class PrayerTimesWidget extends StatelessWidget {
               ),
             ],
           ),
-          Text(
+          ArabicText(
             prayer.time,
             style: TextStyle(
               fontSize: 16,

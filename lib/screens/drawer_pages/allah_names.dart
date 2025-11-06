@@ -1,3 +1,4 @@
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bangla_quran/utils/allah_names_utils.dart';
 
@@ -21,15 +22,15 @@ class _AllahNamesState extends State<AllahNames> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ListTile(
-                  title: Text(
+                  title: ArabicText(
                     names[index]['arabic']!,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text(
+                  subtitle: ArabicText(
                     names[index]['meaning']!,
                     style: TextStyle(fontSize: 12),
                   ),
-                  trailing: Text(
+                  trailing: ArabicText(
                     names[index]['transliteration']!,
                     style: TextStyle(fontSize: 12),
                   ),

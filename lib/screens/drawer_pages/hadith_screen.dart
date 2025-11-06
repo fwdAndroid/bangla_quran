@@ -1,6 +1,7 @@
 import 'package:bangla_quran/model/hadith_model.dart';
 import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/services/hadith_service.dart';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,7 @@ class _HadithScreenState extends State<HadithScreen> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
-        title: Text(
+        title: ArabicText(
           languageProvider.localizedStrings["Hadith Collection"] ??
               "Hadith Collection",
           style: TextStyle(color: Colors.black),
@@ -38,13 +39,13 @@ class _HadithScreenState extends State<HadithScreen> {
             itemBuilder: (context) => [
               PopupMenuItem(
                 value: Language.english,
-                child: Text(
+                child: ArabicText(
                   languageProvider.localizedStrings["English"] ?? "English",
                 ),
               ),
               PopupMenuItem(
                 value: Language.bangla,
-                child: Text(
+                child: ArabicText(
                   languageProvider.localizedStrings["Bangla"] ?? "Bangla",
                 ),
               ),
@@ -59,9 +60,9 @@ class _HadithScreenState extends State<HadithScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
+            return Center(child: ArabicText("Error: ${snapshot.error}"));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text("No Hadiths found"));
+            return const Center(child: ArabicText("No Hadiths found"));
           }
 
           final hadiths = snapshot.data!;
@@ -82,7 +83,7 @@ class _HadithScreenState extends State<HadithScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Arabic Text
-                      Text(
+                      ArabicText(
                         h.arabic,
                         textAlign: TextAlign.right,
                         style: const TextStyle(
@@ -95,7 +96,7 @@ class _HadithScreenState extends State<HadithScreen> {
                       const SizedBox(height: 10),
 
                       // Translation
-                      Text(
+                      ArabicText(
                         selectedLanguage == Language.english
                             ? h.english
                             : h.arabic,
@@ -109,7 +110,7 @@ class _HadithScreenState extends State<HadithScreen> {
                       // Reference
                       Align(
                         alignment: Alignment.bottomRight,
-                        child: Text(
+                        child: ArabicText(
                           h.reference,
                           style: const TextStyle(
                             fontSize: 12,

@@ -1,3 +1,4 @@
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bangla_quran/provider/prayer_time_provider.dart';
@@ -25,7 +26,7 @@ class _PrayerPageState extends State<PrayerPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: const ArabicText(
           'Prayer Times',
           style: TextStyle(color: Colors.white),
         ),

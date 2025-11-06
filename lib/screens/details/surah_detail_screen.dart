@@ -1,4 +1,5 @@
 import 'package:bangla_quran/model/surah_model.dart';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 
 class SurahDetailScreen extends StatefulWidget {
@@ -35,7 +36,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
     return Scaffold(
       backgroundColor: Colors.yellow[50],
       appBar: AppBar(
-        title: Text(
+        title: ArabicText(
           widget.surah.translation,
           style: const TextStyle(
             color: Colors.black,
@@ -88,7 +89,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
                               ),
                             ),
                             child: Center(
-                              child: Text(
+                              child: ArabicText(
                                 '$ayahNumber',
                                 style: const TextStyle(
                                   fontSize: 14,
@@ -109,7 +110,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
                 // Bangla translation
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
+                  child: ArabicText(
                     verse.translation,
                     style: TextStyle(
                       fontSize: 16,

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bangla_quran/screens/quiz/score_screen.dart';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -100,7 +101,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
       return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.white),
-          title: Text('Quiz', style: TextStyle(color: Colors.white)),
+          title: ArabicText('Quiz', style: TextStyle(color: Colors.white)),
         ),
         body: Center(child: CircularProgressIndicator()),
       );
@@ -110,7 +111,9 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Question ${currentIndex + 1}/${randomizedQuizzes.length}'),
+        title: ArabicText(
+          'Question ${currentIndex + 1}/${randomizedQuizzes.length}',
+        ),
         backgroundColor: Colors.green,
       ),
       body: Container(
@@ -135,7 +138,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                         backgroundColor: Colors.green.shade100,
                       ),
                     ),
-                    Text(
+                    ArabicText(
                       '${timeLeft}s',
                       style: TextStyle(
                         fontSize: 18,
@@ -155,7 +158,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
               color: Colors.green.shade50,
               child: Padding(
                 padding: EdgeInsets.all(16),
-                child: Text(
+                child: ArabicText(
                   quiz['question'],
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
@@ -188,7 +191,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                     ),
                   ),
                   onPressed: () => selectOption(i),
-                  child: Text(
+                  child: ArabicText(
                     quiz['options'][i],
                     style: TextStyle(fontSize: 18),
                   ),
@@ -205,7 +208,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                child: Text(
+                child: ArabicText(
                   'Skip',
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),

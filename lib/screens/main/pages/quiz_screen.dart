@@ -1,4 +1,5 @@
 import 'package:bangla_quran/screens/quiz/quiz_game_screen.dart';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _QuizScreenState extends State<QuizScreen> {
           children: [
             Icon(Icons.quiz, size: 120, color: Colors.white),
             SizedBox(height: 20),
-            Text(
+            ArabicText(
               'Islamic Quiz',
               style: TextStyle(
                 color: Colors.white,
@@ -43,7 +44,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              child: Text(
+              child: ArabicText(
                 'Play Quiz',
                 style: TextStyle(color: Colors.green, fontSize: 20),
               ),

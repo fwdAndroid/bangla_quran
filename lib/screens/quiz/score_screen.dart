@@ -1,4 +1,5 @@
 import 'package:bangla_quran/screens/main/main_dashboard.dart';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 
 class ScoreScreen extends StatelessWidget {
@@ -24,12 +25,12 @@ class ScoreScreen extends StatelessWidget {
           children: [
             Icon(Icons.emoji_events, size: 100, color: Colors.white),
             SizedBox(height: 20),
-            Text(
+            ArabicText(
               'Your Score',
               style: TextStyle(color: Colors.white, fontSize: 28),
             ),
             SizedBox(height: 20),
-            Text(
+            ArabicText(
               '$score / $total',
               style: TextStyle(
                 color: Colors.white,
@@ -46,7 +47,7 @@ class ScoreScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              child: Text(
+              child: ArabicText(
                 'Play Again',
                 style: TextStyle(color: Colors.green, fontSize: 20),
               ),

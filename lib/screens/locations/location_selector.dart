@@ -1,4 +1,5 @@
 // lib/screens/location_selector.dart
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as geo;
 import 'package:bangla_quran/model/prayer_location.dart';
@@ -50,14 +51,14 @@ class _LocationSelectorState extends State<LocationSelector> {
       setState(() => _isSearching = false);
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+      ).showSnackBar(SnackBar(content: ArabicText('Error: $e')));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Select Location')),
+      appBar: AppBar(title: const ArabicText('Select Location')),
       body: Column(
         children: [
           Padding(
@@ -93,7 +94,7 @@ class _LocationSelectorState extends State<LocationSelector> {
                   final location = _searchResults[index];
                   return ListTile(
                     leading: const Icon(Icons.location_on),
-                    title: Text(location.name),
+                    title: ArabicText(location.name),
                     onTap: () => Navigator.pop(context, location),
                   );
                 },
@@ -102,7 +103,7 @@ class _LocationSelectorState extends State<LocationSelector> {
           else
             Expanded(
               child: Center(
-                child: Text(
+                child: ArabicText(
                   _searchController.text.isEmpty
                       ? 'Search for a location'
                       : 'No results found',

@@ -1,3 +1,4 @@
+import 'package:bangla_quran/provider/font_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => LanguageProvider()),
         ChangeNotifierProvider(create: (context) => PrayerTimeProvider()),
+        ChangeNotifierProvider(create: (context) => FontSettingsProvider()),
       ],
       child: const MyApp(),
     ),

@@ -1,6 +1,7 @@
 import 'package:bangla_quran/screens/audio/audio_quran.dart';
 import 'package:bangla_quran/screens/drawer_pages/hadith_screen.dart';
 import 'package:bangla_quran/screens/drawer_pages/live_chat.dart';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bangla_quran/screens/drawer_pages/allah_names.dart';
 import 'package:bangla_quran/screens/drawer_pages/tasbeeh_counter.dart';
@@ -41,7 +42,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8),
-            child: Text(
+            child: ArabicText(
               "Learn Quran",
               style: TextStyle(
                 color: Colors.black,
@@ -56,7 +57,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
           ),
           ListTile(
             leading: Icon(Icons.book),
-            title: Text('Audio Quran'),
+            title: ArabicText('Audio Quran'),
             onTap: () {
               Navigator.push(
                 context,
@@ -68,7 +69,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
 
           ListTile(
             leading: Icon(Icons.book),
-            title: Text('Live Chat'),
+            title: ArabicText('Live Chat'),
             onTap: () {
               Navigator.push(
                 context,
@@ -80,7 +81,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
 
           ListTile(
             leading: Icon(Icons.format_list_bulleted),
-            title: Text('Allah Names'),
+            title: ArabicText('Allah Names'),
             onTap: () {
               Navigator.push(
                 context,
@@ -91,7 +92,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
           Divider(),
           ListTile(
             leading: Icon(Icons.fingerprint),
-            title: Text('Tasbeeh Counter'),
+            title: ArabicText('Tasbeeh Counter'),
             onTap: () {
               Navigator.push(
                 context,
@@ -103,7 +104,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
 
           ListTile(
             leading: Icon(Icons.book),
-            title: Text('Hadith'),
+            title: ArabicText('Hadith'),
             onTap: () {
               Navigator.push(
                 context,
@@ -117,7 +118,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
             onTap: () {
               shareApp();
             },
-            title: Text("Invite Friends"),
+            title: ArabicText("Invite Friends"),
             leading: Icon(Icons.share, color: Color(0xFF1D3B2A)),
           ),
           Divider(),
@@ -130,7 +131,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                 },
               );
             },
-            title: Text("Logout"),
+            title: ArabicText("Logout"),
             leading: Icon(Icons.logout, color: Colors.red),
           ),
         ],

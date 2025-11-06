@@ -2,6 +2,7 @@ import 'package:bangla_quran/api/api_calls.dart';
 import 'package:bangla_quran/model/qari_model.dart';
 import 'package:bangla_quran/model/quran_audio_model.dart';
 import 'package:bangla_quran/screens/audio/audio_surah_screen.dart';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:bangla_quran/widgets/qari_custom_tile_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,7 @@ class _AudioQuranState extends State<AudioQuran> {
         future: apiServices.getQariList(),
         builder: (BuildContext context, AsyncSnapshot<List<Qari>> snapshot) {
           if (snapshot.hasError) {
-            return Center(child: Text("Qari's data not found"));
+            return Center(child: ArabicText("Qari's data not found"));
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());

@@ -1,6 +1,7 @@
 import 'package:bangla_quran/model/dua_model.dart';
 import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/services/read_json.dart';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart'; // for combining position streams
@@ -54,9 +55,9 @@ class _DuaTabState extends State<DuaTab> {
       setState(() {});
     } catch (e) {
       debugPrint("Error playing audio: $e");
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Error playing audio")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: ArabicText("Error playing audio")),
+      );
     }
   }
 
@@ -72,7 +73,7 @@ class _DuaTabState extends State<DuaTab> {
               future: ReadJSON().ReadJsonDua(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  return Center(child: Text("Error: ${snapshot.error}"));
+                  return Center(child: ArabicText("Error: ${snapshot.error}"));
                 } else if (!snapshot.hasData) {
                   return const Center(child: CircularProgressIndicator());
                 }
@@ -102,7 +103,7 @@ class _DuaTabState extends State<DuaTab> {
                         padding: const EdgeInsets.all(14.0),
                         child: Column(
                           children: [
-                            const Text(
+                            const ArabicText(
                               '﷽',
                               style: TextStyle(
                                 fontSize: 36,
@@ -110,7 +111,7 @@ class _DuaTabState extends State<DuaTab> {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            Text(
+                            ArabicText(
                               dua.dua ?? "",
                               textAlign: TextAlign.center,
                               style: const TextStyle(
@@ -127,7 +128,7 @@ class _DuaTabState extends State<DuaTab> {
                               ),
                             ),
                             const SizedBox(height: 12),
-                            Text(
+                            ArabicText(
                               dua.translation ?? "",
                               textAlign: TextAlign.center,
                               style: TextStyle(
@@ -137,7 +138,7 @@ class _DuaTabState extends State<DuaTab> {
                               ),
                             ),
                             const SizedBox(height: 6),
-                            Text(
+                            ArabicText(
                               dua.reference ?? "",
                               textAlign: TextAlign.center,
                               style: const TextStyle(
@@ -162,7 +163,9 @@ class _DuaTabState extends State<DuaTab> {
                                     : Icons.play_circle,
                                 size: 24,
                               ),
-                              label: Text(isPlaying ? "Pause" : "Play Audio"),
+                              label: ArabicText(
+                                isPlaying ? "Pause" : "Play Audio",
+                              ),
                             ),
                           ],
                         ),

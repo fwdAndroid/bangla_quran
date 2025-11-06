@@ -1,3 +1,5 @@
+import 'package:bangla_quran/screens/setting/font_setting.dart';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bangla_quran/screens/setting/edit_profile.dart';
 import 'package:bangla_quran/screens/setting/language_setting.dart';
@@ -22,7 +24,7 @@ class _SettingPageState extends State<SettingPage> {
               padding: const EdgeInsets.all(8.0),
               child: Image.asset("assets/logo.png", height: 150),
             ),
-            const Text(
+            const ArabicText(
               'Learn Quran',
               style: TextStyle(
                 fontSize: 24,
@@ -40,7 +42,7 @@ class _SettingPageState extends State<SettingPage> {
                   );
                 },
                 trailing: Icon(Icons.arrow_forward_ios),
-                title: Text("Edit Profile"),
+                title: ArabicText("Edit Profile"),
                 leading: Icon(Icons.person, color: Color(0xFF1D3B2A)),
               ),
             ),
@@ -53,8 +55,26 @@ class _SettingPageState extends State<SettingPage> {
                   );
                 },
                 trailing: Icon(Icons.arrow_forward_ios),
-                title: Text("Change Language"),
+                title: ArabicText("Change Language"),
                 leading: Icon(Icons.language, color: Color(0xFF1D3B2A)),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (builder) => FontSettingsScreen(),
+                    ),
+                  );
+                },
+                trailing: Icon(Icons.arrow_forward_ios),
+                title: ArabicText("Font Setting"),
+                leading: Icon(
+                  Icons.font_download_sharp,
+                  color: Color(0xFF1D3B2A),
+                ),
               ),
             ),
             Card(
@@ -63,7 +83,7 @@ class _SettingPageState extends State<SettingPage> {
                   shareApp();
                 },
                 trailing: Icon(Icons.arrow_forward_ios),
-                title: Text("Invite Friends"),
+                title: ArabicText("Invite Friends"),
                 leading: Icon(Icons.share, color: Color(0xFF1D3B2A)),
               ),
             ),
@@ -78,7 +98,7 @@ class _SettingPageState extends State<SettingPage> {
                   );
                 },
                 trailing: Icon(Icons.arrow_forward_ios),
-                title: Text("Logout"),
+                title: ArabicText("Logout"),
                 leading: Icon(Icons.logout, color: Colors.red),
               ),
             ),

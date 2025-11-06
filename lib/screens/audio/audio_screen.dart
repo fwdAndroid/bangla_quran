@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:bangla_quran/model/qari_model.dart';
 import 'package:bangla_quran/screens/audio/surrah_model.dart';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:bangla_quran/widgets/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -104,7 +105,7 @@ class _AudioScreenState extends State<AudioScreen> {
           },
           icon: Icon(Icons.arrow_back_ios, color: Colors.black),
         ),
-        title: Text(
+        title: ArabicText(
           'Now Playing',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800),
         ),
@@ -133,7 +134,7 @@ class _AudioScreenState extends State<AudioScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    ArabicText(
                       widget.list![currentIndex].name!,
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -142,7 +143,7 @@ class _AudioScreenState extends State<AudioScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(
+                    ArabicText(
                       'Total Aya : ${widget.list![currentIndex].numberOfAyahs}',
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
@@ -371,7 +372,7 @@ class _AudioScreenState extends State<AudioScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              ArabicText(
                                 'UPCOMING SURAH',
                                 style: TextStyle(
                                   color: Colors.black,
@@ -390,7 +391,7 @@ class _AudioScreenState extends State<AudioScreen> {
                                       Icons.play_circle_fill,
                                       color: Constants.kPrimary,
                                     ),
-                                    Text(
+                                    ArabicText(
                                       widget.list![currentIndex + 1].name!,
                                       style: TextStyle(
                                         color: Colors.black,
@@ -413,7 +414,7 @@ class _AudioScreenState extends State<AudioScreen> {
                                           : Icons.play_circle_fill,
                                       color: Constants.kPrimary,
                                     ),
-                                    Text(
+                                    ArabicText(
                                       currentIndex > 111
                                           ? ''
                                           : widget
@@ -530,7 +531,7 @@ class _SeekBarState extends State<SeekBar> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              ArabicText(
                 _positionText,
                 style: TextStyle(
                   color: Colors.black,
@@ -538,7 +539,7 @@ class _SeekBarState extends State<SeekBar> {
                   fontSize: _width * 0.05,
                 ),
               ),
-              Text(
+              ArabicText(
                 _durationText,
                 style: TextStyle(
                   color: Colors.black,
@@ -583,7 +584,7 @@ void showSliderDialog({
           height: 100.0,
           child: Column(
             children: [
-              Text(
+              ArabicText(
                 '${snapshot.data?.toStringAsFixed(1)}$valueSuffix',
                 style: TextStyle(
                   fontFamily: 'Fixed',

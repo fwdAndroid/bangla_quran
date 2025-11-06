@@ -1,3 +1,4 @@
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,7 +25,7 @@ class LogoutWidget extends StatelessWidget {
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
+                    child: ArabicText(
                       "Oh No, you're leaving",
                       style: GoogleFonts.workSans(
                         fontWeight: FontWeight.w500,
@@ -37,7 +38,7 @@ class LogoutWidget extends StatelessWidget {
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
+                    child: ArabicText(
                       "Are you sure you want to log out?",
                       style: GoogleFonts.workSans(
                         fontWeight: FontWeight.w500,
@@ -62,7 +63,7 @@ class LogoutWidget extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text("No", style: TextStyle(color: Colors.black)),
+              child: ArabicText("No", style: TextStyle(color: Colors.black)),
             ),
             const SizedBox(width: 10),
             ElevatedButton(
@@ -82,7 +83,7 @@ class LogoutWidget extends StatelessWidget {
                 // Show snack bar message
                 showMessageBar("Logout Successfully", context);
               },
-              child: Text("Yes", style: TextStyle(color: Colors.white)),
+              child: ArabicText("Yes", style: TextStyle(color: Colors.white)),
               style: ElevatedButton.styleFrom(
                 fixedSize: Size(137, 50),
                 backgroundColor: Color(0xFF1D3B2A),

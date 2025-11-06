@@ -1,3 +1,4 @@
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bangla_quran/screens/main/main_dashboard.dart';
@@ -66,9 +67,9 @@ class _AuthScreenState extends State<AuthScreen> {
         );
       }
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Google sign-in failed: $e')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: ArabicText('Google sign-in failed: $e')),
+      );
     } finally {
       setState(() => isLoading = false);
     }
@@ -84,7 +85,7 @@ class _AuthScreenState extends State<AuthScreen> {
           child: Column(
             children: [
               const SizedBox(height: 30),
-              const Text(
+              const ArabicText(
                 'Learn Quran',
                 style: TextStyle(
                   fontSize: 24,
@@ -93,7 +94,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
+              const ArabicText(
                 'Log in or register to\nsave your progress',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey, fontSize: 16),
@@ -121,7 +122,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ? Border.all(color: Colors.black)
                                 : Border.all(color: Colors.transparent),
                           ),
-                          child: Text(
+                          child: ArabicText(
                             'Sign in',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -145,7 +146,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ? Border.all(color: Colors.black)
                                 : Border.all(color: Colors.transparent),
                           ),
-                          child: Text(
+                          child: ArabicText(
                             'Register',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -163,7 +164,7 @@ class _AuthScreenState extends State<AuthScreen> {
               /// Email Field
               const Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Email address"),
+                child: ArabicText("Email address"),
               ),
               const SizedBox(height: 5),
               TextField(
@@ -181,7 +182,7 @@ class _AuthScreenState extends State<AuthScreen> {
               if (!isLogin) ...[
                 const Align(
                   alignment: Alignment.centerLeft,
-                  child: Text("Username"),
+                  child: ArabicText("Username"),
                 ),
                 const SizedBox(height: 5),
                 TextField(
@@ -199,7 +200,7 @@ class _AuthScreenState extends State<AuthScreen> {
               /// Password
               const Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Password"),
+                child: ArabicText("Password"),
               ),
               const SizedBox(height: 5),
               TextField(
@@ -219,7 +220,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   alignment: Alignment.centerRight,
                   child: Padding(
                     padding: EdgeInsets.only(top: 8.0),
-                    child: Text(
+                    child: ArabicText(
                       "Forgot password?",
                       style: TextStyle(fontSize: 13),
                     ),
@@ -241,7 +242,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                     ),
                     onPressed: isLoading ? null : _handleAuth,
-                    child: Text(
+                    child: ArabicText(
                       isLogin ? "Sign in" : "Register",
                       style: TextStyle(color: Colors.white),
                     ),
@@ -249,7 +250,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text("Other sign in options"),
+              const ArabicText("Other sign in options"),
               const SizedBox(height: 10),
               SocialLoginButton(
                 height: 55,
