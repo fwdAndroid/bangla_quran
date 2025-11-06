@@ -48,18 +48,18 @@ class _ChangeLangageState extends State<ChangeLangage> {
             // ListTile for Arabic
             ListTile(
               onTap: () {
-                languageProvider.changeLanguage('ar'); // Change to Spanish
+                languageProvider.changeLanguage('bn'); // Change to Spanish
                 Navigator.pop(context); // Optionally close the language screen
               },
               trailing: Icon(
-                languageProvider.currentLanguage == 'ar'
+                languageProvider.currentLanguage == 'bn'
                     ? Icons.radio_button_checked
                     : Icons.radio_button_off,
                 color: Colors.black,
                 size: 20,
               ),
               title: ArabicText(
-                languageProvider.localizedStrings['Arabic'] ?? "Arabic",
+                languageProvider.localizedStrings['Bangla'] ?? "Bangla",
                 style: GoogleFonts.poppins(color: Colors.black, fontSize: 16),
               ),
             ),

@@ -73,6 +73,7 @@ flutter:
   assets:
     - assets/
     - assets/json/
+    - assets/lang/
     - assets/fonts/
     - assets/fonts/Amiri-Regular.ttf
     - assets/fonts/ScheherazadeNew-Regular.ttf
