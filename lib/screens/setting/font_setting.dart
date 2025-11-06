@@ -15,7 +15,7 @@ class FontSettingsScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.black),
         title: ArabicText('اعدادات الخط'),
         backgroundColor: Colors.transparent,
         elevation: 0,

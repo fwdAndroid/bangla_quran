@@ -36,7 +36,7 @@ class ArabicText extends StatelessWidget {
           TextStyle(
             fontFamily: fontProvider.arabicFontFamily,
             fontSize: fontProvider.fontSize,
-            color: Colors.white,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
     );
