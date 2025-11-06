@@ -17,6 +17,7 @@ class _QuizScreenState extends State<QuizScreen> {
     final languageProvider = Provider.of<LanguageProvider>(context);
 
     return Scaffold(
+      appBar: AppBar(backgroundColor: Colors.green.shade800),
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:bangla_quran/model/surah_model.dart';
 import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/screens/details/surah_detail_screen.dart';
+import 'package:bangla_quran/screens/main/pages/quiz_screen.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:bangla_quran/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
@@ -85,10 +86,34 @@ class _QuranScreenState extends State<QuranScreen>
             color: Colors.black,
           ),
         ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 12),
-            child: Icon(Icons.search, color: Colors.black),
+        actions: [
+          // Padding(
+          //   padding: EdgeInsets.only(right: 12),
+          //   child: Icon(Icons.search, color: Colors.black),
+          // ),
+          // 📋 Popup Menu
+          PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert, color: Colors.black),
+            onSelected: (value) {
+              if (value == 'quiz') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => QuizScreen()),
+                );
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'quiz',
+                child: Row(
+                  children: [
+                    Icon(Icons.quiz_outlined, color: Colors.blue),
+                    SizedBox(width: 8),
+                    Text('Quiz'),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
