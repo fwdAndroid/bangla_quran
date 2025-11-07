@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bangla_quran/model/surah_model.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
-import 'package:flutter/material.dart';
 
 class SurahDetailScreen extends StatefulWidget {
   final Surah surah;
@@ -15,9 +18,10 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
-  // ✅ State for toggling visibility
   bool hideArabic = false;
   bool hideBangla = false;
+  int? expandedAyahIndex;
+  Set<int> bookmarkedAyahs = {};
 
   @override
   void initState() {
@@ -26,6 +30,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
       vsync: this,
       duration: const Duration(seconds: 2),
     )..repeat(reverse: true);
+    _loadBookmarks(); // ✅ Load saved bookmarks
   }
 
   @override
@@ -34,8 +39,62 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
     super.dispose();
   }
 
+  /// ✅ Load bookmarked Ayahs from SharedPreferences
+  Future<void> _loadBookmarks() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedList = prefs.getStringList('bookmarks_${widget.surah.id}') ?? [];
+    setState(() {
+      bookmarkedAyahs = savedList.map(int.parse).toSet();
+    });
+  }
+
+  /// ✅ Save bookmarked Ayahs to SharedPreferences
+  Future<void> _saveBookmarks() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(
+      'bookmarks_${widget.surah.id}',
+      bookmarkedAyahs.map((e) => e.toString()).toList(),
+    );
+  }
+
+  void _copyAyah(String arabic, String translation) {
+    Clipboard.setData(ClipboardData(text: "$arabic\n$translation"));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text("Copied to clipboard")));
+  }
+
+  void _shareAyah(String arabic, String translation) {
+    Share.share("$arabic\n\n$translation");
+  }
+
+  void _reportAyah(int ayahNumber) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text("Reported Ayah $ayahNumber")));
+  }
+
+  void _toggleBookmark(int index, int ayahNumber) async {
+    setState(() {
+      if (bookmarkedAyahs.contains(index)) {
+        bookmarkedAyahs.remove(index);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Removed Ayah $ayahNumber from bookmarks")),
+        );
+      } else {
+        bookmarkedAyahs.add(index);
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Bookmarked Ayah $ayahNumber")));
+      }
+    });
+    await _saveBookmarks();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final totalAyahs = widget.surah.verses.length;
+
     return Scaffold(
       backgroundColor: Colors.yellow[50],
       appBar: AppBar(
@@ -51,11 +110,9 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
         centerTitle: true,
         elevation: 0,
       ),
-
-      // 🌙 Body with toggles + list
       body: Column(
         children: [
-          // 🔘 Top toggles (visible below AppBar)
+          // 🔘 Top toggles
           Container(
             color: Colors.yellow[100],
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -67,9 +124,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
                     Checkbox(
                       value: !hideArabic,
                       onChanged: (value) {
-                        setState(() {
-                          hideArabic = !(value ?? true);
-                        });
+                        setState(() => hideArabic = !(value ?? true));
                       },
                     ),
                     const Text(
@@ -84,9 +139,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
                     Checkbox(
                       value: !hideBangla,
                       onChanged: (value) {
-                        setState(() {
-                          hideBangla = !(value ?? true);
-                        });
+                        setState(() => hideBangla = !(value ?? true));
                       },
                     ),
                     const Text(
@@ -101,7 +154,53 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
 
           const Divider(height: 1),
 
-          // 📜 Verses list
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.yellow[100],
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 6,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+                border: Border.all(color: Colors.yellow.shade700, width: 1),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 10,
+                ),
+                child: Column(
+                  children: [
+                    ArabicText(
+                      widget.surah.translation,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Total Ayahs: $totalAyahs',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // 📜 Ayah List
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -109,13 +208,15 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
               itemBuilder: (context, index) {
                 final verse = widget.surah.verses[index];
                 final ayahNumber = index + 1;
+                final isExpanded = expandedAyahIndex == index;
+                final isBookmarked = bookmarkedAyahs.contains(index);
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      // 🕋 Arabic verse (only visible if not hidden)
+                      // Arabic text
                       if (!hideArabic)
                         RichText(
                           textAlign: TextAlign.right,
@@ -131,7 +232,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
                                 ),
                               ),
                               TextSpan(
-                                text: ' ﴿${ayahNumber.toString()}﴾ ',
+                                text: ' ﴿$ayahNumber﴾ ',
                                 style: TextStyle(
                                   fontFamily: 'Amiri',
                                   fontSize: 20,
@@ -146,7 +247,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
 
                       const SizedBox(height: 8),
 
-                      // 📘 Bangla translation (only visible if not hidden)
+                      // Bangla translation
                       if (!hideBangla)
                         Align(
                           alignment: Alignment.centerLeft,
@@ -160,7 +261,57 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
                           ),
                         ),
 
-                      // 🌟 Divider
+                      // Bookmark + 3 Dots
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                            icon: Icon(
+                              isBookmarked
+                                  ? Icons.bookmark
+                                  : Icons.bookmark_border,
+                              color: isBookmarked
+                                  ? Colors.orange
+                                  : Colors.grey[600],
+                            ),
+                            onPressed: () => _toggleBookmark(index, ayahNumber),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.more_vert),
+                            onPressed: () {
+                              setState(() {
+                                expandedAyahIndex = isExpanded ? null : index;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+
+                      // Expanded menu
+                      if (isExpanded)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton.icon(
+                              onPressed: () =>
+                                  _shareAyah(verse.text, verse.translation),
+                              icon: const Icon(Icons.share, size: 18),
+                              label: const Text("Share"),
+                            ),
+                            TextButton.icon(
+                              onPressed: () =>
+                                  _copyAyah(verse.text, verse.translation),
+                              icon: const Icon(Icons.copy, size: 18),
+                              label: const Text("Copy"),
+                            ),
+                            TextButton.icon(
+                              onPressed: () => _reportAyah(ayahNumber),
+                              icon: const Icon(Icons.flag, size: 18),
+                              label: const Text("Report"),
+                            ),
+                          ],
+                        ),
+
                       if (index != widget.surah.verses.length - 1)
                         AnimatedGradientDivider(controller: _controller),
                     ],
@@ -175,10 +326,9 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
   }
 }
 
-/// 🌟 Animated Gradient Divider (Reused)
+/// 🌟 Animated Gradient Divider
 class AnimatedGradientDivider extends StatelessWidget {
   final AnimationController controller;
-
   const AnimatedGradientDivider({super.key, required this.controller});
 
   @override
