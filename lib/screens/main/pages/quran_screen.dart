@@ -75,7 +75,7 @@ class _QuranScreenState extends State<QuranScreen>
       drawer: const DrawerWidget(),
       //   backgroundColor: Colors.yellow[700],
       appBar: AppBar(
-        backgroundColor: Colors.yellow[700],
+        backgroundColor: Color(0xfffed700),
         elevation: 0,
         title: ArabicText(
           languageProvider.localizedStrings["Al Quran (in Surah order)"] ??
@@ -122,7 +122,7 @@ class _QuranScreenState extends State<QuranScreen>
           // Green Basmallah header
           Container(
             width: double.infinity,
-            color: Colors.green[700],
+            color: Color(0xff4eb250),
             padding: const EdgeInsets.symmetric(vertical: 14),
             child: const Center(
               child: ArabicText(
