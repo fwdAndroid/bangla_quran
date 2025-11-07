@@ -15,10 +15,13 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
+  // ✅ State for toggling visibility
+  bool hideArabic = false;
+  bool hideBangla = false;
+
   @override
   void initState() {
     super.initState();
-    // 🌟 Animation controller for shimmer divider
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -48,85 +51,125 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
         centerTitle: true,
         elevation: 0,
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        itemCount: widget.surah.verses.length,
-        itemBuilder: (context, index) {
-          final verse = widget.surah.verses[index];
-          final ayahNumber = index + 1;
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+      // 🌙 Body with toggles + list
+      body: Column(
+        children: [
+          // 🔘 Top toggles (visible below AppBar)
+          Container(
+            color: Colors.yellow[100],
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Arabic text with ayah number
-                RichText(
-                  textAlign: TextAlign.right,
-                  text: TextSpan(
+                Row(
+                  children: [
+                    Checkbox(
+                      value: !hideArabic,
+                      onChanged: (value) {
+                        setState(() {
+                          hideArabic = !(value ?? true);
+                        });
+                      },
+                    ),
+                    const Text(
+                      "Show Arabic",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                const SizedBox(width: 20),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: !hideBangla,
+                      onChanged: (value) {
+                        setState(() {
+                          hideBangla = !(value ?? true);
+                        });
+                      },
+                    ),
+                    const Text(
+                      "Show Bangla",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          const Divider(height: 1),
+
+          // 📜 Verses list
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              itemCount: widget.surah.verses.length,
+              itemBuilder: (context, index) {
+                final verse = widget.surah.verses[index];
+                final ayahNumber = index + 1;
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      TextSpan(
-                        text: verse.text,
-                        style: const TextStyle(
-                          fontFamily: 'Amiri',
-                          fontSize: 26,
-                          height: 1.8,
-                          color: Colors.black,
-                        ),
-                      ),
-                      WidgetSpan(
-                        alignment: PlaceholderAlignment.middle,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 6),
-                          child: Container(
-                            width: 28,
-                            height: 28,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.green,
-                                width: 1.8,
-                              ),
-                            ),
-                            child: Center(
-                              child: ArabicText(
-                                '$ayahNumber',
+                      // 🕋 Arabic verse (only visible if not hidden)
+                      if (!hideArabic)
+                        RichText(
+                          textAlign: TextAlign.right,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: verse.text,
                                 style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.green,
+                                  fontFamily: 'Amiri',
+                                  fontSize: 26,
+                                  height: 1.8,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              TextSpan(
+                                text: ' ﴿${ayahNumber.toString()}﴾ ',
+                                style: TextStyle(
+                                  fontFamily: 'Amiri',
+                                  fontSize: 20,
+                                  height: 1.8,
+                                  color: Colors.green[700],
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                            ],
+                          ),
+                        ),
+
+                      const SizedBox(height: 8),
+
+                      // 📘 Bangla translation (only visible if not hidden)
+                      if (!hideBangla)
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: ArabicText(
+                            verse.translation,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey[800],
+                              height: 1.5,
                             ),
                           ),
                         ),
-                      ),
+
+                      // 🌟 Divider
+                      if (index != widget.surah.verses.length - 1)
+                        AnimatedGradientDivider(controller: _controller),
                     ],
                   ),
-                ),
-
-                const SizedBox(height: 8),
-
-                // Bangla translation
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: ArabicText(
-                    verse.translation,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[800],
-                      height: 1.5,
-                    ),
-                  ),
-                ),
-
-                // 🌟 Animated Divider (same shimmer style as previous screen)
-                if (index != widget.surah.verses.length - 1)
-                  AnimatedGradientDivider(controller: _controller),
-              ],
+                );
+              },
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
