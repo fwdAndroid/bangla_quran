@@ -2,6 +2,8 @@ import 'package:bangla_quran/model/hadith_model.dart';
 import 'package:bangla_quran/services/hadith_service.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:bangla_quran/provider/theme_provider.dart';
 
 enum Language { english, bangla }
 
@@ -14,10 +16,13 @@ class ZikrTab extends StatefulWidget {
 
 class _ZikrTabState extends State<ZikrTab> {
   Language selectedLanguage = Language.english;
-
   final HadithService _service = HadithService();
+
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
+
     return FutureBuilder<List<Hadith>>(
       future: _service.fetchHadiths(book: 'sahih-bukhari', limit: 15),
       builder: (context, snapshot) {
@@ -35,7 +40,9 @@ class _ZikrTabState extends State<ZikrTab> {
           itemBuilder: (context, index) {
             final h = hadiths[index];
             return Card(
-              color: Colors.white.withOpacity(0.95),
+              color: isDarkMode
+                  ? Colors.black.withOpacity(0.9)
+                  : Colors.white.withOpacity(0.95),
               elevation: 5,
               margin: const EdgeInsets.all(10),
               shape: RoundedRectangleBorder(
@@ -50,23 +57,23 @@ class _ZikrTabState extends State<ZikrTab> {
                     ArabicText(
                       h.arabic,
                       textAlign: TextAlign.right,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Amiri',
-                        color: Colors.black87,
+                        color: isDarkMode ? Colors.white : Colors.black87,
                       ),
                     ),
                     const SizedBox(height: 10),
 
-                    // Translation
+                    // Translation (switchable language)
                     ArabicText(
                       selectedLanguage == Language.english
                           ? h.english
                           : h.arabic,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
-                        color: Colors.black87,
+                        color: isDarkMode ? Colors.white70 : Colors.black87,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -76,9 +83,9 @@ class _ZikrTabState extends State<ZikrTab> {
                       alignment: Alignment.bottomRight,
                       child: ArabicText(
                         h.reference,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
-                          color: Colors.grey,
+                          color: isDarkMode ? Colors.grey[400] : Colors.grey,
                         ),
                       ),
                     ),
