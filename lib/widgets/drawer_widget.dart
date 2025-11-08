@@ -1,7 +1,7 @@
 import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/screens/audio/audio_quran.dart';
-import 'package:bangla_quran/screens/drawer_pages/hadith_screen.dart';
 import 'package:bangla_quran/screens/drawer_pages/live_chat.dart';
+import 'package:bangla_quran/screens/tab_pages/zikr_tab.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bangla_quran/screens/drawer_pages/allah_names.dart';
@@ -123,7 +123,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HadithScreen()),
+                MaterialPageRoute(builder: (context) => ZikrTab()),
               );
             },
           ),

@@ -1,4 +1,3 @@
-// lib/widgets/prayer_times.dart
 import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/provider/prayer_time_provider.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
@@ -6,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bangla_quran/model/prayer_location.dart';
 import 'package:bangla_quran/model/prayer_model.dart';
-
 import 'package:bangla_quran/screens/locations/location_selector.dart';
 
 class PrayerTimesWidget extends StatelessWidget {
@@ -16,24 +14,27 @@ class PrayerTimesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<PrayerTimeProvider>(context);
     final languageProvider = Provider.of<LanguageProvider>(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? Colors.black : Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
+          if (!isDark)
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
+            ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          /// Header Row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -43,11 +44,14 @@ class PrayerTimesWidget extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF1D3B2A),
+                  color: isDark ? Colors.white : const Color(0xFF1D3B2A),
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.location_on),
+                icon: Icon(
+                  Icons.location_on,
+                  color: isDark ? Colors.white70 : const Color(0xFF1D3B2A),
+                ),
                 onPressed: () async {
                   final newLocation = await Navigator.push<PrayerLocation>(
                     context,
@@ -61,17 +65,25 @@ class PrayerTimesWidget extends StatelessWidget {
             ],
           ),
 
+          /// Location Info
           if (provider.currentLocation != null)
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
               child: Row(
                 children: [
-                  const Icon(Icons.location_pin, size: 16, color: Colors.grey),
+                  Icon(
+                    Icons.location_pin,
+                    size: 16,
+                    color: isDark ? Colors.white70 : Colors.grey,
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: ArabicText(
                       provider.currentLocation!.name,
-                      style: const TextStyle(fontSize: 14, color: Colors.grey),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: isDark ? Colors.white70 : Colors.grey,
+                      ),
                     ),
                   ),
                   TextButton(
@@ -79,12 +91,16 @@ class PrayerTimesWidget extends StatelessWidget {
                     child: ArabicText(
                       languageProvider.localizedStrings['Reset to Current'] ??
                           'Reset to Current',
+                      style: TextStyle(
+                        color: isDark ? Colors.amber : const Color(0xFF1D3B2A),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
 
+          /// Prayer Times / States
           if (provider.isLoading)
             const Center(child: CircularProgressIndicator())
           else if (provider.error != null)
@@ -94,20 +110,24 @@ class PrayerTimesWidget extends StatelessWidget {
             )
           else
             ...provider.prayerTimes.map(
-              (prayer) => _buildPrayerTimeRow(prayer),
+              (prayer) => _buildPrayerTimeRow(context, prayer),
             ),
         ],
       ),
     );
   }
 
-  Widget _buildPrayerTimeRow(PrayerTime prayer) {
+  Widget _buildPrayerTimeRow(BuildContext context, PrayerTime prayer) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
         color: prayer.isCurrent
-            ? const Color(0xFF1D3B2A).withOpacity(0.1)
-            : null,
+            ? (isDark
+                  ? Colors.amber.withOpacity(0.1)
+                  : const Color(0xFF1D3B2A).withOpacity(0.1))
+            : Colors.transparent,
         borderRadius: BorderRadius.circular(8),
       ),
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
@@ -121,8 +141,8 @@ class PrayerTimesWidget extends StatelessWidget {
                   width: 8,
                   height: 8,
                   margin: const EdgeInsets.only(right: 8),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF1D3B2A),
+                  decoration: BoxDecoration(
+                    color: isDark ? Colors.amber : const Color(0xFF1D3B2A),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -134,8 +154,8 @@ class PrayerTimesWidget extends StatelessWidget {
                       ? FontWeight.bold
                       : FontWeight.normal,
                   color: prayer.isCurrent
-                      ? const Color(0xFF1D3B2A)
-                      : Colors.black,
+                      ? (isDark ? Colors.amber : const Color(0xFF1D3B2A))
+                      : (isDark ? Colors.white : Colors.black),
                 ),
               ),
             ],
@@ -147,7 +167,9 @@ class PrayerTimesWidget extends StatelessWidget {
               fontWeight: prayer.isCurrent
                   ? FontWeight.bold
                   : FontWeight.normal,
-              color: prayer.isCurrent ? const Color(0xFF1D3B2A) : Colors.black,
+              color: prayer.isCurrent
+                  ? (isDark ? Colors.amber : const Color(0xFF1D3B2A))
+                  : (isDark ? Colors.white : Colors.black),
             ),
           ),
         ],

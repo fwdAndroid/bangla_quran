@@ -1,4 +1,3 @@
-// lib/widgets/hijri_calendar.dart
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
@@ -11,12 +10,11 @@ class HijriWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final hijriDate = HijriCalendar.now();
     final gregorianDate = DateTime.now();
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Format the hijri date
+    // Format the Hijri and Gregorian dates
     final hijriFormatted =
         "${hijriDate.hDay} ${hijriDate.longMonthName} ${hijriDate.hYear} AH";
-
-    // Format the gregorian date
     final gregorianFormatted = DateFormat(
       'EEEE, d MMMM y',
     ).format(gregorianDate);
@@ -24,28 +22,47 @@ class HijriWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: isDark ? Colors.black : Colors.white,
         borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          if (!isDark)
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
+            ),
+        ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ArabicText(
             hijriFormatted,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF1D3B2A),
+              color: isDark ? Colors.white : const Color(0xFF1D3B2A),
             ),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),
           ArabicText(
             gregorianFormatted,
-            style: const TextStyle(fontSize: 16, color: Colors.grey),
+            style: TextStyle(
+              fontSize: 16,
+              color: isDark ? Colors.white70 : Colors.grey[700],
+            ),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),
           ArabicText(
             hijriDate.longMonthName,
-            style: const TextStyle(fontSize: 16, color: Colors.grey),
+            style: TextStyle(
+              fontSize: 16,
+              color: isDark ? Colors.white54 : Colors.grey[600],
+            ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),

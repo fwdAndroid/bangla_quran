@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:bangla_quran/provider/language_provider.dart';
+import 'package:bangla_quran/provider/theme_provider.dart'; // ✅ Import ThemeProvider
 
 class ChangeLangage extends StatefulWidget {
   const ChangeLangage({super.key});
@@ -14,18 +15,24 @@ class ChangeLangage extends StatefulWidget {
 class _ChangeLangageState extends State<ChangeLangage> {
   @override
   Widget build(BuildContext context) {
-    final languageProvider = Provider.of<LanguageProvider>(
-      context,
-    ); // Access the provider
+    final languageProvider = Provider.of<LanguageProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDark = themeProvider.isDarkMode; // ✅ Get theme mode
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: isDark ? Colors.black : Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: isDark ? Colors.black : Colors.white,
         centerTitle: true,
         title: ArabicText(
           languageProvider.localizedStrings['Language'] ?? "Language",
+          style: TextStyle(
+            color: isDark ? Colors.white : Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        iconTheme: IconThemeData(color: isDark ? Colors.white : Colors.black),
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -38,51 +45,65 @@ class _ChangeLangageState extends State<ChangeLangage> {
                   languageProvider.localizedStrings['Select Language'] ??
                       'Select Language',
                   style: GoogleFonts.poppins(
-                    color: Colors.black,
+                    color: isDark ? Colors.white : Colors.black,
                     fontWeight: FontWeight.w500,
                     fontSize: 17,
                   ),
                 ),
               ),
             ),
-            // ListTile for Arabic
+
+            // 🌙 Bangla
             ListTile(
+              leading: Icon(
+                Icons.language,
+                color: isDark ? Colors.white : Colors.black,
+              ),
               onTap: () {
-                languageProvider.changeLanguage('bn'); // Change to Spanish
-                Navigator.pop(context); // Optionally close the language screen
+                languageProvider.changeLanguage('bn');
+                Navigator.pop(context);
               },
               trailing: Icon(
                 languageProvider.currentLanguage == 'bn'
                     ? Icons.radio_button_checked
                     : Icons.radio_button_off,
-                color: Colors.black,
+                color: isDark ? Colors.white : Colors.black,
                 size: 20,
               ),
               title: ArabicText(
                 languageProvider.localizedStrings['Bangla'] ?? "Bangla",
-                style: GoogleFonts.poppins(color: Colors.black, fontSize: 16),
+                style: GoogleFonts.poppins(
+                  color: isDark ? Colors.white : Colors.black,
+                  fontSize: 16,
+                ),
               ),
             ),
-            // ListTile for English
+
+            // 🇬🇧 English
             ListTile(
+              leading: Icon(
+                Icons.language,
+                color: isDark ? Colors.white : Colors.black,
+              ),
               onTap: () {
-                languageProvider.changeLanguage('en'); // Change to English
+                languageProvider.changeLanguage('en');
                 Navigator.pop(context);
               },
               trailing: Icon(
                 languageProvider.currentLanguage == 'en'
                     ? Icons.radio_button_checked
                     : Icons.radio_button_off,
-                color: Colors.black,
+                color: isDark ? Colors.white : Colors.black,
                 size: 20,
               ),
               title: ArabicText(
                 languageProvider.localizedStrings['English'] ?? "English",
-                style: GoogleFonts.poppins(color: Colors.black, fontSize: 16),
+                style: GoogleFonts.poppins(
+                  color: isDark ? Colors.white : Colors.black,
+                  fontSize: 16,
+                ),
               ),
             ),
-
-            // ListTile for French
           ],
         ),
       ),
