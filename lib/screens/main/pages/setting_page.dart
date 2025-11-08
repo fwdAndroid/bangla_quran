@@ -1,4 +1,5 @@
 import 'package:bangla_quran/provider/language_provider.dart';
+import 'package:bangla_quran/provider/theme_provider.dart';
 import 'package:bangla_quran/screens/setting/font_setting.dart';
 import 'package:bangla_quran/screens/setting/theme_setting.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
@@ -20,74 +21,103 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     final languageProvider = Provider.of<LanguageProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
+
+    final iconColor = isDarkMode ? Colors.white : const Color(0xFF1D3B2A);
+    final textColor = isDarkMode ? Colors.white : Colors.black;
+    final cardColor = themeProvider.cardColor;
+    final backgroundColor = themeProvider.backgroundColor;
 
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset("assets/logo.png", height: 150),
-            ),
-            ArabicText(
-              languageProvider.localizedStrings["Learn Quran"] ?? 'Learn Quran',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF1D3B2A),
+        backgroundColor: backgroundColor,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset("assets/logo.png", height: 150),
               ),
-            ),
-            const SizedBox(height: 20),
-            Card(
-              child: ListTile(
+              ArabicText(
+                languageProvider.localizedStrings["Learn Quran"] ??
+                    'Learn Quran',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: textColor,
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // 🌙 Edit Profile
+              buildSettingCard(
+                context,
+                icon: Icons.person,
+                title:
+                    languageProvider.localizedStrings["Edit Profile"] ??
+                    "Edit Profile",
+                iconColor: iconColor,
+                cardColor: cardColor,
+                textColor: textColor,
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (builder) => EditProfile()),
+                    MaterialPageRoute(
+                      builder: (builder) => const EditProfile(),
+                    ),
                   );
                 },
-                trailing: Icon(Icons.arrow_forward_ios),
-                title: ArabicText(
-                  languageProvider.localizedStrings["Edit Profile"] ??
-                      "Edit Profile",
-                ),
-                leading: Icon(Icons.person, color: Color(0xFF1D3B2A)),
               ),
-            ),
-            Card(
-              child: ListTile(
+
+              // 🌍 Change Language
+              buildSettingCard(
+                context,
+                icon: Icons.language,
+                title:
+                    languageProvider.localizedStrings["Change Language"] ??
+                    "Change Language",
+                iconColor: iconColor,
+                cardColor: cardColor,
+                textColor: textColor,
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (builder) => ChangeLangage()),
                   );
                 },
-                trailing: Icon(Icons.arrow_forward_ios),
-                title: ArabicText(
-                  languageProvider.localizedStrings["Change Language"] ??
-                      "Change Language",
-                ),
-                leading: Icon(Icons.language, color: Color(0xFF1D3B2A)),
               ),
-            ),
-            Card(
-              child: ListTile(
+
+              // 🎨 Theme Setting
+              buildSettingCard(
+                context,
+                icon: Icons.color_lens,
+                title:
+                    languageProvider.localizedStrings["Theme Setting"] ??
+                    "Theme Setting",
+                iconColor: iconColor,
+                cardColor: cardColor,
+                textColor: textColor,
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (builder) => ThemeSetting()),
+                    MaterialPageRoute(
+                      builder: (builder) => const ThemeSetting(),
+                    ),
                   );
                 },
-                trailing: Icon(Icons.arrow_forward_ios),
-                title: ArabicText(
-                  languageProvider.localizedStrings["Theme Setting"] ??
-                      "Theme Setting",
-                ),
-                leading: Icon(Icons.language, color: Color(0xFF1D3B2A)),
               ),
-            ),
-            Card(
-              child: ListTile(
+
+              // 🔤 Font Setting
+              buildSettingCard(
+                context,
+                icon: Icons.font_download_sharp,
+                title:
+                    languageProvider.localizedStrings["Font Setting"] ??
+                    "Font Setting",
+                iconColor: iconColor,
+                cardColor: cardColor,
+                textColor: textColor,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -96,55 +126,72 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                   );
                 },
-                trailing: Icon(Icons.arrow_forward_ios),
-                title: ArabicText(
-                  languageProvider.localizedStrings["Font Setting"] ??
-                      "Font Setting",
-                ),
-                leading: Icon(
-                  Icons.font_download_sharp,
-                  color: Color(0xFF1D3B2A),
-                ),
               ),
-            ),
-            Card(
-              child: ListTile(
+
+              // 🤝 Invite Friends
+              buildSettingCard(
+                context,
+                icon: Icons.share,
+                title:
+                    languageProvider.localizedStrings["Invite Friends"] ??
+                    "Invite Friends",
+                iconColor: iconColor,
+                cardColor: cardColor,
+                textColor: textColor,
+                onTap: shareApp,
+              ),
+
+              // 🚪 Logout
+              buildSettingCard(
+                context,
+                icon: Icons.logout,
+                title: languageProvider.localizedStrings["Logout"] ?? "Logout",
+                iconColor: Colors.red,
+                cardColor: cardColor,
+                textColor: textColor,
                 onTap: () {
-                  shareApp();
-                },
-                trailing: Icon(Icons.arrow_forward_ios),
-                title: ArabicText(
-                  languageProvider.localizedStrings["Invite Friends"] ??
-                      "Invite Friends",
-                ),
-                leading: Icon(Icons.share, color: Color(0xFF1D3B2A)),
-              ),
-            ),
-            Card(
-              child: ListTile(
-                onTap: () async {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return LogoutWidget();
+                      return const LogoutWidget();
                     },
                   );
                 },
-                trailing: Icon(Icons.arrow_forward_ios),
-                title: ArabicText(
-                  languageProvider.localizedStrings["Logout"] ?? "Logout",
-                ),
-                leading: Icon(Icons.logout, color: Colors.red),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
+  // 🔹 Reusable function for ListTile
+  Widget buildSettingCard(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required Color iconColor,
+    required Color textColor,
+    required Color cardColor,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      color: cardColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: ListTile(
+        onTap: onTap,
+        leading: Icon(icon, color: iconColor),
+        title: ArabicText(
+          title,
+          style: TextStyle(color: textColor, fontWeight: FontWeight.w500),
+        ),
+        trailing: Icon(Icons.arrow_forward_ios, color: iconColor),
+      ),
+    );
+  }
+
   void shareApp() {
-    String appLink =
+    const appLink =
         "https://play.google.com/store/apps/details?id=com.example.yourapp";
     Share.share("Hey, check out this amazing app: $appLink");
   }
