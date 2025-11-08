@@ -1,3 +1,4 @@
+import 'package:bangla_quran/utils/surrah_name_bangla.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
@@ -39,7 +40,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
     super.dispose();
   }
 
-  /// ✅ Load bookmarked Ayahs from SharedPreferences
+  /// Load bookmarked Ayahs from SharedPreferences
   Future<void> _loadBookmarks() async {
     final prefs = await SharedPreferences.getInstance();
     final savedList = prefs.getStringList('bookmarks_${widget.surah.id}') ?? [];
@@ -48,7 +49,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
     });
   }
 
-  /// ✅ Save bookmarked Ayahs to SharedPreferences
+  /// Save bookmarked Ayahs to SharedPreferences
   Future<void> _saveBookmarks() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setStringList(
@@ -154,6 +155,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
 
           const Divider(height: 1),
 
+          // Surah info card
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Container(
@@ -178,7 +180,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
                 child: Column(
                   children: [
                     ArabicText(
-                      widget.surah.translation,
+                      surahNamesBangla[widget.surah.id - 1],
                       style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -216,33 +218,35 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      // Arabic text
+                      // Arabic text with left-aligned Ayah number
                       if (!hideArabic)
-                        RichText(
-                          textAlign: TextAlign.right,
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: verse.text,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '﴿$ayahNumber﴾',
+                              style: TextStyle(
+                                fontFamily: 'Amiri',
+                                fontSize: 20,
+                                height: 1.8,
+                                color: Colors.green[700],
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: ArabicText(
+                                verse.text,
                                 style: const TextStyle(
                                   fontFamily: 'Amiri',
                                   fontSize: 26,
                                   height: 1.8,
                                   color: Colors.black,
                                 ),
+                                textAlign: TextAlign.right,
                               ),
-                              TextSpan(
-                                text: ' ﴿$ayahNumber﴾ ',
-                                style: TextStyle(
-                                  fontFamily: 'Amiri',
-                                  fontSize: 20,
-                                  height: 1.8,
-                                  color: Colors.green[700],
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
 
                       const SizedBox(height: 8),
