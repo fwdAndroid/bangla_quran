@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bangla_quran/model/surah_model.dart';
 import 'package:bangla_quran/provider/language_provider.dart';
+import 'package:bangla_quran/provider/theme_provider.dart';
 import 'package:bangla_quran/screens/details/surah_detail_screen.dart';
 import 'package:bangla_quran/screens/main/pages/quiz_screen.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
@@ -70,12 +71,20 @@ class _QuranScreenState extends State<QuranScreen>
   @override
   Widget build(BuildContext context) {
     final languageProvider = Provider.of<LanguageProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
+
+    // 🎨 Define theme-based colors
+    final backgroundColor = isDarkMode ? Colors.black : Colors.white;
+    final cardColor = isDarkMode ? Colors.grey[900]! : Colors.white;
+    final textColor = isDarkMode ? Colors.white : Colors.black;
+    final subtitleColor = isDarkMode ? Colors.grey[400]! : Colors.grey[700]!;
 
     return Scaffold(
+      backgroundColor: backgroundColor,
       drawer: const DrawerWidget(),
-      //   backgroundColor: Colors.yellow[700],
       appBar: AppBar(
-        backgroundColor: Color(0xfffed700),
+        backgroundColor: const Color(0xfffed700),
         elevation: 0,
         title: ArabicText(
           languageProvider.localizedStrings["Al Quran (in Surah order)"] ??
@@ -87,18 +96,13 @@ class _QuranScreenState extends State<QuranScreen>
           ),
         ),
         actions: [
-          // Padding(
-          //   padding: EdgeInsets.only(right: 12),
-          //   child: Icon(Icons.search, color: Colors.black),
-          // ),
-          // 📋 Popup Menu
           PopupMenuButton<String>(
-            icon: Icon(Icons.more_vert, color: Colors.black),
+            icon: const Icon(Icons.more_vert, color: Colors.black),
             onSelected: (value) {
               if (value == 'quiz') {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => QuizScreen()),
+                  MaterialPageRoute(builder: (context) => const QuizScreen()),
                 );
               }
             },
@@ -119,10 +123,10 @@ class _QuranScreenState extends State<QuranScreen>
       ),
       body: Column(
         children: [
-          // Green Basmallah header
+          // 🌿 Basmallah Header
           Container(
             width: double.infinity,
-            color: Color(0xff4eb250),
+            color: const Color(0xff4eb250),
             padding: const EdgeInsets.symmetric(vertical: 14),
             child: const Center(
               child: ArabicText(
@@ -137,7 +141,7 @@ class _QuranScreenState extends State<QuranScreen>
             ),
           ),
 
-          // Surah List
+          // 📖 Surah List
           Expanded(
             child: isLoading
                 ? const Center(child: CircularProgressIndicator())
@@ -160,7 +164,7 @@ class _QuranScreenState extends State<QuranScreen>
                           );
                         },
                         child: Container(
-                          color: Colors.white,
+                          color: cardColor,
                           padding: const EdgeInsets.symmetric(
                             vertical: 10,
                             horizontal: 10,
@@ -168,7 +172,7 @@ class _QuranScreenState extends State<QuranScreen>
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              // Surah number circle
+                              // 🔵 Surah number circle
                               Container(
                                 width: 42,
                                 height: 42,
@@ -182,26 +186,26 @@ class _QuranScreenState extends State<QuranScreen>
                                 child: Center(
                                   child: ArabicText(
                                     '${surah.id}',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.brown,
+                                      color: Colors.brown.shade400,
                                     ),
                                   ),
                                 ),
                               ),
                               const SizedBox(width: 10),
 
-                              // Surah title and translation
+                              // 🕌 Surah title and translation
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     ArabicText(
                                       surah.transliteration,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.black,
+                                        color: textColor,
                                       ),
                                     ),
                                     const SizedBox(height: 3),
@@ -209,32 +213,33 @@ class _QuranScreenState extends State<QuranScreen>
                                       surah.translation,
                                       style: TextStyle(
                                         fontSize: 13,
-                                        color: Colors.grey[700],
+                                        color: subtitleColor,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
 
-                              // Arabic name
+                              // 🕋 Arabic name
                               Padding(
                                 padding: const EdgeInsets.only(right: 6),
                                 child: ArabicText(
                                   surah.name,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 18,
                                     fontFamily: 'Amiri',
                                     fontWeight: FontWeight.w500,
+                                    color: textColor,
                                   ),
                                 ),
                               ),
 
-                              // Trailing icon
+                              // ⏬ Trailing icon
                               Icon(
                                 index == 2
                                     ? Icons.access_time
                                     : Icons.cloud_download_outlined,
-                                color: Colors.grey[600],
+                                color: subtitleColor,
                                 size: 22,
                               ),
                             ],

@@ -1,0 +1,33 @@
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class ThemeProvider extends ChangeNotifier {
+  ThemeMode _themeMode = ThemeMode.light;
+
+  ThemeMode get themeMode => _themeMode;
+  bool get isDarkMode => _themeMode == ThemeMode.dark;
+
+  Future<void> toggleTheme(bool isOn) async {
+    _themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
+    notifyListeners();
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isDarkMode', isOn);
+  }
+
+  Future<void> loadTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isDark = prefs.getBool('isDarkMode') ?? false;
+    _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+    notifyListeners();
+  }
+
+  // 🎨 Common color getters for easy usage
+  Color get backgroundColor => isDarkMode ? Colors.black : Colors.white;
+
+  Color get cardColor => isDarkMode ? Colors.grey[900]! : Colors.white;
+
+  Color get textColor => isDarkMode ? Colors.white : Colors.black;
+
+  Color get subtitleColor => isDarkMode ? Colors.grey[400]! : Colors.grey[700]!;
+}

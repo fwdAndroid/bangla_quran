@@ -1,5 +1,6 @@
 import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/screens/setting/font_setting.dart';
+import 'package:bangla_quran/screens/setting/theme_setting.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bangla_quran/screens/setting/edit_profile.dart';
@@ -65,6 +66,22 @@ class _SettingPageState extends State<SettingPage> {
                 title: ArabicText(
                   languageProvider.localizedStrings["Change Language"] ??
                       "Change Language",
+                ),
+                leading: Icon(Icons.language, color: Color(0xFF1D3B2A)),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (builder) => ThemeSetting()),
+                  );
+                },
+                trailing: Icon(Icons.arrow_forward_ios),
+                title: ArabicText(
+                  languageProvider.localizedStrings["Theme Setting"] ??
+                      "Theme Setting",
                 ),
                 leading: Icon(Icons.language, color: Color(0xFF1D3B2A)),
               ),
