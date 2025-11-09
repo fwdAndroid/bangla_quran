@@ -158,8 +158,10 @@ class _QuranScreenState extends State<QuranScreen>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (builder) =>
-                                  SurahDetailScreen(surah: surah),
+                              builder: (builder) => SurahDetailScreen(
+                                surah: surah,
+                                allSurahs: allSurahs,
+                              ),
                             ),
                           );
                         },

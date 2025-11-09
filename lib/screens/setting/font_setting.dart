@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FontSettingsScreen extends StatelessWidget {
-  final List<String> fonts = ['Tahoma', 'Amiri', 'Scheherazade', 'KFGQPC'];
+  final List<String> fonts = ['Tahoma', 'Amiri'];
 
   @override
   Widget build(BuildContext context) {
@@ -16,25 +16,43 @@ class FontSettingsScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
-        title: ArabicText('اعدادات الخط'),
+        title: ArabicText("Font Setting"),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/bg.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: ListView(
               physics: const BouncingScrollPhysics(),
               children: [
+                const SizedBox(height: 24),
+
+                // Display Options Header
+                ArabicText(
+                  "Display Options",
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SwitchListTile(
+                  title: const Text("Show Arabic"),
+                  value: fontProvider.showArabic,
+                  onChanged: (value) => fontProvider.toggleShowArabic(value),
+                ),
+                SwitchListTile(
+                  title: const Text("Show Bangla"),
+                  value: fontProvider.showBangla,
+                  onChanged: (value) => fontProvider.toggleShowBangla(value),
+                ),
+
+                const SizedBox(height: 16),
+
+                // Font Selection Header
                 ArabicText(
                   languageProvider
                           .localizedStrings["Choose the type of Arabic font"] ??
@@ -46,29 +64,30 @@ class FontSettingsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
 
-                // Font Selection (Radio Buttons)
-                ...fonts.map((font) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: RadioListTile<String>(
-                      title: ArabicText(
-                        font,
-                        style: TextStyle(fontFamily: font),
+                // Font Selection (Horizontal Switches)
+                Row(
+                  children: fonts.map((font) {
+                    final isSelected = fontProvider.arabicFontFamily == font;
+                    return Expanded(
+                      child: SwitchListTile(
+                        title: ArabicText(
+                          font,
+                          style: TextStyle(fontFamily: font),
+                        ),
+                        value: isSelected,
+                        onChanged: (value) {
+                          if (value) {
+                            fontProvider.updateFontFamily(font);
+                          }
+                        },
                       ),
-                      dense: true,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                      value: font,
-                      groupValue: fontProvider.arabicFontFamily,
-                      onChanged: (value) {
-                        if (value != null) {
-                          fontProvider.updateFontFamily(value);
-                        }
-                      },
-                    ),
-                  );
-                }).toList(),
+                    );
+                  }).toList(),
+                ),
 
                 const SizedBox(height: 20),
+
+                // Font Size Header
                 ArabicText(
                   languageProvider.localizedStrings["Font Size"] ?? "Font Size",
                   style: const TextStyle(
@@ -77,6 +96,8 @@ class FontSettingsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
+
+                // Font Size Slider
                 Slider(
                   value: fontProvider.fontSize,
                   min: 18,
@@ -94,34 +115,7 @@ class FontSettingsScreen extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 24),
-                const Divider(color: Colors.white70),
                 const SizedBox(height: 16),
-
-                ArabicText(
-                  languageProvider.localizedStrings["Font Preview"] ??
-                      "Font Preview",
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: ArabicText(
-                    languageProvider
-                            .localizedStrings["God is the Light of the heavens and the earth."] ??
-                        'ٱللَّهُ نُورُ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضِ',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-
-                const SizedBox(height: 30),
 
                 // Reset Button
                 Center(
@@ -154,6 +148,7 @@ class FontSettingsScreen extends StatelessWidget {
                     },
                   ),
                 ),
+
                 const SizedBox(height: 40),
               ],
             ),

@@ -2,20 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FontSettingsProvider extends ChangeNotifier {
-  String _arabicFontFamily = 'Tahoma'; // default
-  double _fontSize = 14.0; // default
+  String _arabicFontFamily = 'Amiri';
+  double _fontSize = 24.0;
+  bool _showArabic = true;
+  bool _showBangla = true;
 
   String get arabicFontFamily => _arabicFontFamily;
   double get fontSize => _fontSize;
+  bool get showArabic => _showArabic;
+  bool get showBangla => _showBangla;
 
   FontSettingsProvider() {
-    _loadFontSettings();
+    _loadSettings();
   }
 
-  Future<void> _loadFontSettings() async {
+  Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
-    _arabicFontFamily = prefs.getString('arabicFontFamily') ?? 'Tahoma';
-    _fontSize = prefs.getDouble('fontSize') ?? 18.0;
+    _arabicFontFamily = prefs.getString('arabicFontFamily') ?? 'Amiri';
+    _fontSize = prefs.getDouble('fontSize') ?? 24.0;
+    _showArabic = prefs.getBool('showArabic') ?? true;
+    _showBangla = prefs.getBool('showBangla') ?? true;
     notifyListeners();
   }
 
@@ -33,15 +39,27 @@ class FontSettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// 🔁 Reset to default and save in SharedPreferences
-  Future<void> resetToDefault() async {
-    _arabicFontFamily = 'Tahoma';
-    _fontSize = 18.0;
-
+  Future<void> toggleShowArabic(bool value) async {
+    _showArabic = value;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('arabicFontFamily', _arabicFontFamily);
-    await prefs.setDouble('fontSize', _fontSize);
+    await prefs.setBool('showArabic', value);
+    notifyListeners();
+  }
 
+  Future<void> toggleShowBangla(bool value) async {
+    _showBangla = value;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('showBangla', value);
+    notifyListeners();
+  }
+
+  Future<void> resetDefaults() async {
+    _arabicFontFamily = 'Amiri';
+    _fontSize = 24.0;
+    _showArabic = true;
+    _showBangla = true;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
     notifyListeners();
   }
 }

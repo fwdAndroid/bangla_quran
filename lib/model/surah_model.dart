@@ -4,12 +4,14 @@ class Surah {
   final int id;
   final String name;
   final String transliteration;
+  final String type;
   final String translation;
   final List<Verse> verses;
 
   Surah({
     required this.id,
     required this.name,
+    required this.type,
     required this.transliteration,
     required this.translation,
     required this.verses,
@@ -22,6 +24,7 @@ class Surah {
 
     return Surah(
       id: json['id'],
+      type: json['type'],
       name: json['name'],
       transliteration: json['transliteration'],
       translation: json['translation'],
