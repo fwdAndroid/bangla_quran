@@ -119,7 +119,8 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
       backgroundColor: Colors.yellow[50],
       appBar: AppBar(
         title: ArabicText(
-          currentSurah.translation,
+          surahNamesBangla[currentSurah.id - 1],
+          // currentSurah.translation,
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -143,8 +144,10 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
         child: Column(
           children: [
             SurahHeaderOrnament(
-              revelationType: currentSurah.type, // dynamic
-              surahName: surahNamesBangla[currentSurah.id - 1],
+              revelationType:
+                  currentSurah.type[0].toUpperCase() +
+                  currentSurah.type.substring(1), // dynamic
+              surahName: currentSurah.translation,
               totalVerses: totalAyahs,
             ),
             // Padding(
@@ -336,6 +339,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
                               alignment: Alignment.centerLeft,
                               child: ArabicText(
                                 verse.translation,
+                                textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.grey[800],

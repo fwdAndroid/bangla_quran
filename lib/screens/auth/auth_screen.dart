@@ -90,8 +90,7 @@ class _AuthScreenState extends State<AuthScreen> {
             children: [
               const SizedBox(height: 30),
               ArabicText(
-                languageProvider.localizedStrings["Learn Quran"] ??
-                    'Learn Quran',
+                languageProvider.localizedStrings["Al-Quran"] ?? 'Al-Quran',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -242,8 +241,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   child: Padding(
                     padding: EdgeInsets.only(top: 8.0),
                     child: ArabicText(
-                      languageProvider.localizedStrings["Forgot password?"] ??
-                          "Forgot password?",
+                      "? Forgot Password ",
                       style: TextStyle(fontSize: 13),
                     ),
                   ),

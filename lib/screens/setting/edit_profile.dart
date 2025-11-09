@@ -17,6 +17,8 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController addressControoler = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   bool _isLoading = false;
 
   @override
@@ -35,6 +37,8 @@ class _EditProfileState extends State<EditProfile> {
 
     setState(() {
       nameController.text = data['username'] ?? '';
+      phoneController.text = data['phone'] ?? "Phone Number Not Avaible";
+      addressControoler.text = data['address'] ?? "Address Not Avaiable";
     });
   }
 
@@ -55,7 +59,7 @@ class _EditProfileState extends State<EditProfile> {
             // Profile Image Section
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image.asset("assets/logo.png"),
+              child: Image.asset("assets/logo.png", height: 120),
             ),
 
             // Full Name Input
@@ -73,7 +77,34 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               ),
             ),
-
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              child: TextField(
+                controller: addressControoler,
+                decoration: InputDecoration(
+                  hintText:
+                      languageProvider.localizedStrings['Your Address'] ??
+                      "Your Address",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              child: TextField(
+                controller: phoneController,
+                decoration: InputDecoration(
+                  hintText:
+                      languageProvider.localizedStrings['Phone Number'] ??
+                      "Phone Number",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+            ),
             Spacer(),
 
             // Save Button
@@ -85,11 +116,17 @@ class _EditProfileState extends State<EditProfile> {
                         color: Color(0xFF1D3B2A),
                       ),
                     )
-                  : SaveButton(
-                      title:
-                          languageProvider.localizedStrings['Edit Profile'] ??
-                          "Edit Profile",
-                      onTap: () async {
+                  : ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xfffed700),
+                        fixedSize: Size(300, 60),
+                      ),
+                      child: Text(
+                        languageProvider.localizedStrings['Edit Profile'] ??
+                            "Edit Profile",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () async {
                         setState(() {
                           _isLoading = true;
                         });
@@ -98,7 +135,11 @@ class _EditProfileState extends State<EditProfile> {
                           await FirebaseFirestore.instance
                               .collection("users")
                               .doc(FirebaseAuth.instance.currentUser!.uid)
-                              .update({"username": nameController.text});
+                              .update({
+                                "username": nameController.text,
+                                "phone": phoneController.text,
+                                "address": addressControoler.text,
+                              });
                           showMessageBar(
                             languageProvider
                                     .localizedStrings['Successfully Updated Profile'] ??

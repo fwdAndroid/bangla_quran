@@ -4,6 +4,7 @@ import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/provider/theme_provider.dart';
 import 'package:bangla_quran/screens/details/surah_detail_screen.dart';
 import 'package:bangla_quran/screens/main/pages/quiz_screen.dart';
+import 'package:bangla_quran/utils/surrah_name_bangla.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:bangla_quran/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
@@ -86,9 +87,9 @@ class _QuranScreenState extends State<QuranScreen>
       appBar: AppBar(
         backgroundColor: const Color(0xfffed700),
         elevation: 0,
+        centerTitle: true,
         title: ArabicText(
-          languageProvider.localizedStrings["Al Quran (in Surah order)"] ??
-              'Al Quran (in Surah order)',
+          'আল কুরআন',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -166,6 +167,7 @@ class _QuranScreenState extends State<QuranScreen>
                           );
                         },
                         child: Container(
+                          margin: EdgeInsets.only(left: 8, right: 8),
                           color: cardColor,
                           padding: const EdgeInsets.symmetric(
                             vertical: 10,
@@ -203,7 +205,7 @@ class _QuranScreenState extends State<QuranScreen>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     ArabicText(
-                                      surah.transliteration,
+                                      surahNamesBangla[surah.id - 1],
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600,
@@ -211,7 +213,7 @@ class _QuranScreenState extends State<QuranScreen>
                                       ),
                                     ),
                                     const SizedBox(height: 3),
-                                    ArabicText(
+                                    Text(
                                       surah.translation,
                                       style: TextStyle(
                                         fontSize: 13,
