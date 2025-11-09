@@ -1,25 +1,20 @@
 import 'dart:convert';
-import 'package:bangla_quran/model/surah_model.dart';
-import 'package:bangla_quran/provider/language_provider.dart';
-import 'package:bangla_quran/provider/theme_provider.dart';
-import 'package:bangla_quran/screens/details/surah_detail_screen.dart';
-import 'package:bangla_quran/utils/surrah_name_bangla.dart';
-import 'package:bangla_quran/widgets/arabic_text_widget.dart';
+import 'package:bangla_quran/screens/details/english_surah_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
+import 'package:bangla_quran/screens/details/surah_detail_screen.dart';
+import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 
-class QuranScreen extends StatefulWidget {
-  const QuranScreen({super.key});
+class QuranEnglishScreen extends StatefulWidget {
+  const QuranEnglishScreen({super.key});
 
   @override
-  State<QuranScreen> createState() => _QuranScreenState();
+  State<QuranEnglishScreen> createState() => _QuranEnglishScreenState();
 }
 
-class _QuranScreenState extends State<QuranScreen>
+class _QuranEnglishScreenState extends State<QuranEnglishScreen>
     with SingleTickerProviderStateMixin {
-  List<Surah> allSurahs = [];
-  List<Surah> filteredSurahs = [];
+  List<dynamic> allSurahs = [];
   bool isLoading = true;
   bool isError = false;
 
@@ -41,34 +36,17 @@ class _QuranScreenState extends State<QuranScreen>
     super.dispose();
   }
 
-  // 🔢 Convert English numbers to Bangla numbers
-  String convertToBanglaNumber(int number) {
-    const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-    String numStr = number.toString();
-    String banglaNumber = '';
-    for (var ch in numStr.split('')) {
-      if (int.tryParse(ch) != null) {
-        banglaNumber += banglaDigits[int.parse(ch)];
-      } else {
-        banglaNumber += ch;
-      }
-    }
-    return banglaNumber;
-  }
-
   Future<void> fetchSurahs() async {
     try {
       final response = await http.get(
         Uri.parse(
-          'https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran_bn.json',
+          'https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran_en.json',
         ),
       );
 
       if (response.statusCode == 200) {
-        List jsonResponse = json.decode(response.body);
-        allSurahs = jsonResponse.map((s) => Surah.fromJson(s)).toList();
         setState(() {
-          filteredSurahs = allSurahs;
+          allSurahs = json.decode(response.body);
           isLoading = false;
         });
       } else {
@@ -84,11 +62,9 @@ class _QuranScreenState extends State<QuranScreen>
 
   @override
   Widget build(BuildContext context) {
-    final languageProvider = Provider.of<LanguageProvider>(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
 
-    // 🎨 Define theme-based colors
     final backgroundColor = isDarkMode ? Colors.black : Colors.white;
     final cardColor = isDarkMode ? Colors.grey[900]! : Colors.white;
     final textColor = isDarkMode ? Colors.white : Colors.black;
@@ -96,28 +72,29 @@ class _QuranScreenState extends State<QuranScreen>
 
     return Scaffold(
       backgroundColor: backgroundColor,
-
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : isError
-          ? const Center(child: ArabicText('ডাটা লোড করতে ব্যর্থ হয়েছে'))
+          ? const Center(child: Text('Failed to load Quran in English'))
           : ListView.separated(
-              itemCount: filteredSurahs.length,
+              itemCount: allSurahs.length,
               separatorBuilder: (context, index) =>
                   AnimatedGradientDivider(controller: _controller),
               itemBuilder: (context, index) {
-                var surah = filteredSurahs[index];
+                final surah = allSurahs[index];
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (builder) => SurahDetailScreen(
-                          surah: surah,
-                          allSurahs: allSurahs,
+                        builder: (builder) => SurahDetailEnglishScreen(
+                          surahId: surah['id'],
+                          totalSurahs: allSurahs.length, // ✅ correct
                         ),
                       ),
                     );
+                    // Optional: Navigate to Surah detail screen in English
+                    // You can reuse SurahDetailScreen if you adapt it for English
                   },
                   child: Container(
                     margin: const EdgeInsets.only(left: 18, right: 18),
@@ -129,7 +106,7 @@ class _QuranScreenState extends State<QuranScreen>
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // 🔵 Surah number circle (Bangla)
+                        // 🔵 Surah number
                         Container(
                           width: 42,
                           height: 42,
@@ -142,7 +119,7 @@ class _QuranScreenState extends State<QuranScreen>
                           ),
                           child: Center(
                             child: Text(
-                              convertToBanglaNumber(surah.id),
+                              '${surah['id']}',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.brown.shade400,
@@ -153,13 +130,13 @@ class _QuranScreenState extends State<QuranScreen>
                         ),
                         const SizedBox(width: 10),
 
-                        // 🕌 Surah title and translation
+                        // Surah title & translation
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ArabicText(
-                                surahNamesBangla[surah.id - 1],
+                              Text(
+                                surah['transliteration'],
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
@@ -168,7 +145,7 @@ class _QuranScreenState extends State<QuranScreen>
                               ),
                               const SizedBox(height: 3),
                               Text(
-                                surah.translation,
+                                surah['translation'],
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: subtitleColor,
@@ -178,11 +155,11 @@ class _QuranScreenState extends State<QuranScreen>
                           ),
                         ),
 
-                        // 🕋 Arabic name
+                        // Arabic name
                         Padding(
                           padding: const EdgeInsets.only(right: 6),
                           child: ArabicText(
-                            surah.name,
+                            surah['name'],
                             style: TextStyle(
                               fontSize: 18,
                               fontFamily: 'Amiri',
@@ -192,7 +169,7 @@ class _QuranScreenState extends State<QuranScreen>
                           ),
                         ),
 
-                        // ⏬ Trailing icon
+                        // Trailing icon
                         Icon(
                           index == 2
                               ? Icons.access_time

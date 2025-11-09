@@ -1,5 +1,6 @@
 import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/screens/main/main_dashboard.dart';
+import 'package:bangla_quran/screens/quiz/quiz_game_screen.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +59,7 @@ class ScoreScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (_) => MainDashboard()),
+                  MaterialPageRoute(builder: (_) => QuizGameScreen()),
                 );
               },
             ),

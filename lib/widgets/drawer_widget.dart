@@ -1,14 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/screens/audio/audio_quran.dart';
 import 'package:bangla_quran/screens/drawer_pages/live_chat.dart';
-import 'package:bangla_quran/screens/tab_pages/zikr_tab.dart';
-import 'package:bangla_quran/widgets/arabic_text_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:bangla_quran/screens/drawer_pages/allah_names.dart';
 import 'package:bangla_quran/screens/drawer_pages/tasbeeh_counter.dart';
-import 'package:bangla_quran/widgets/logout_widget.dart';
-import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key});
@@ -17,20 +14,11 @@ class DrawerWidget extends StatefulWidget {
   State<DrawerWidget> createState() => _DrawerWidgetState();
 }
 
-class _DrawerWidgetState extends State<DrawerWidget>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+class _DrawerWidgetState extends State<DrawerWidget> {
+  void shareApp() {
+    String appLink =
+        "https://play.google.com/store/apps/details?id=com.example.yourapp";
+    Share.share("Hey, check out this amazing Quran app: $appLink");
   }
 
   @override
@@ -38,130 +26,127 @@ class _DrawerWidgetState extends State<DrawerWidget>
     final languageProvider = Provider.of<LanguageProvider>(context);
 
     return Drawer(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8, top: 10),
-            child: Image.asset("assets/logo.png", height: 150, width: 200),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8),
-            child: ArabicText(
-              languageProvider.localizedStrings["Learn Quran"] ?? "Learn Quran",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 27,
+      elevation: 8,
+      child: Container(
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Header
+              Image.asset("assets/logo.png", height: 200),
+
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                    ),
+                  ),
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 10,
+                    ),
+                    children: [
+                      _buildDrawerItem(
+                        icon: Icons.library_music,
+                        text: "অডিও কুরআন",
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const AudioQuran(),
+                          ),
+                        ),
+                      ),
+                      _buildDrawerItem(
+                        icon: Icons.chat,
+                        text: "লাইভ চ্যাট",
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LiveChat(),
+                          ),
+                        ),
+                      ),
+                      _buildDrawerItem(
+                        icon: Icons.menu_book_rounded,
+                        text: "আল্লাহর নামসমূহ",
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const AllahNamesScreen(),
+                          ),
+                        ),
+                      ),
+                      _buildDrawerItem(
+                        icon: Icons.fingerprint_rounded,
+                        text: "তাসবিহ কাউন্টার",
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TasbeehCounterPage(),
+                          ),
+                        ),
+                      ),
+                      const Divider(height: 25),
+                      _buildDrawerItem(
+                        icon: Icons.share,
+                        text: "বন্ধুদের আমন্ত্রণ জানান",
+                        iconColor: Colors.teal,
+                        onTap: shareApp,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Divider(color: Colors.grey),
-          ),
-          ListTile(
-            leading: Icon(Icons.book),
-            title: ArabicText(
-              languageProvider.localizedStrings["Audio Quran"] ?? 'Audio Quran',
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AudioQuran()),
-              );
-            },
-          ),
-          Divider(),
-
-          ListTile(
-            leading: Icon(Icons.book),
-            title: ArabicText(
-              languageProvider.localizedStrings["Live Chat"] ?? 'Live Chat',
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LiveChat()),
-              );
-            },
-          ),
-          Divider(),
-
-          ListTile(
-            leading: Icon(Icons.format_list_bulleted),
-            title: ArabicText(
-              languageProvider.localizedStrings["Allah Names"] ?? 'Allah Names',
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AllahNamesScreen()),
-              );
-            },
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.fingerprint),
-            title: ArabicText(
-              languageProvider.localizedStrings["Tasbeeh Counter"] ??
-                  'Tasbeeh Counter',
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => TasbeehCounterPage()),
-              );
-            },
-          ),
-          Divider(),
-
-          ListTile(
-            leading: Icon(Icons.book),
-            title: ArabicText(
-              languageProvider.localizedStrings["Hadith"] ?? 'Hadith',
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ZikrTab()),
-              );
-            },
-          ),
-          Divider(),
-
-          ListTile(
-            onTap: () {
-              shareApp();
-            },
-            title: ArabicText(
-              languageProvider.localizedStrings["Invite Friends"] ??
-                  "Invite Friends",
-            ),
-            leading: Icon(Icons.share, color: Color(0xFF1D3B2A)),
-          ),
-          Divider(),
-          ListTile(
-            onTap: () async {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return LogoutWidget();
-                },
-              );
-            },
-            title: ArabicText(
-              languageProvider.localizedStrings["Logout"] ?? "Logout",
-            ),
-            leading: Icon(Icons.logout, color: Colors.red),
-          ),
-        ],
+        ),
       ),
     );
   }
 
-  void shareApp() {
-    String appLink =
-        "https://play.google.com/store/apps/details?id=com.example.yourapp";
-    Share.share("Hey, check out this amazing app: $appLink");
+  Widget _buildDrawerItem({
+    required IconData icon,
+    required String text,
+    required VoidCallback onTap,
+    Color iconColor = Colors.green,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(14),
+        onTap: onTap,
+        child: Ink(
+          decoration: BoxDecoration(
+            color: Colors.green.shade50,
+            borderRadius: BorderRadius.circular(14),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.15),
+                blurRadius: 6,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: ListTile(
+            leading: Icon(icon, color: iconColor, size: 26),
+            title: Text(
+              text,
+              style: const TextStyle(
+                color: Colors.black87,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+              ),
+            ),
+            trailing: const Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.grey,
+              size: 18,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

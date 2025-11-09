@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/provider/theme_provider.dart';
+import 'package:bangla_quran/screens/audio/audio_quran.dart';
+import 'package:bangla_quran/screens/main/pages/home_screen.dart';
 import 'package:bangla_quran/screens/main/pages/memory_page.dart';
 import 'package:bangla_quran/screens/main/pages/prayer_page.dart';
 import 'package:bangla_quran/screens/main/pages/qibla_page.dart';
@@ -21,8 +23,8 @@ class _MainDashboardState extends State<MainDashboard> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    const QuranScreen(),
-    const MemoryPage(),
+    const HomeTabScreen(),
+    const AudioQuran(),
     const PrayerPage(),
     QiblaPage(),
     const SettingPage(),
@@ -93,7 +95,8 @@ class _MainDashboardState extends State<MainDashboard> {
                       color: unselectedColor,
                     ),
               label:
-                  languageProvider.localizedStrings["Memorize"] ?? 'Memorize',
+                  languageProvider.localizedStrings["Audio Quran"] ??
+                  'Audio Quran',
             ),
             BottomNavigationBarItem(
               icon: _currentIndex == 2

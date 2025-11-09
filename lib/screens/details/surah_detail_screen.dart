@@ -214,19 +214,18 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
                     child: GestureDetector(
                       onTap: () {
                         HapticFeedback.lightImpact();
-                        showDialog(
+                        showModalBottomSheet(
                           context: context,
+                          backgroundColor: Colors.white,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                          ),
                           builder: (context) {
-                            return AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              title: Text(
-                                "অপশন সমূহ",
-                                textAlign: TextAlign.center,
-                              ),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
+                            return Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Wrap(
                                 children: [
                                   ListTile(
                                     leading: Icon(
@@ -279,6 +278,11 @@ class _SurahDetailScreenState extends State<SurahDetailScreen>
                                       Navigator.pop(context);
                                       _reportAyah(ayahNumber);
                                     },
+                                  ),
+                                  ListTile(
+                                    leading: const Icon(Icons.close),
+                                    title: const Text("Cancel"),
+                                    onTap: () => Navigator.pop(context),
                                   ),
                                 ],
                               ),

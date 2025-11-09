@@ -1,12 +1,12 @@
 import 'package:bangla_quran/provider/font_provider.dart';
 import 'package:bangla_quran/provider/theme_provider.dart';
+import 'package:bangla_quran/screens/main/main_dashboard.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bangla_quran/firebase_options.dart';
 import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/provider/prayer_time_provider.dart';
-import 'package:bangla_quran/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(color: Colors.white70),
         ),
       ),
-      home: SplashScreen(),
+      home: MainDashboard(),
     );
   }
 }

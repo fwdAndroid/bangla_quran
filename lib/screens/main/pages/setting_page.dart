@@ -4,9 +4,6 @@ import 'package:bangla_quran/screens/setting/font_setting.dart';
 import 'package:bangla_quran/screens/setting/theme_setting.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:bangla_quran/screens/setting/edit_profile.dart';
-import 'package:bangla_quran/screens/setting/language_setting.dart';
-import 'package:bangla_quran/widgets/logout_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -40,8 +37,7 @@ class _SettingPageState extends State<SettingPage> {
                 child: Image.asset("assets/logo.png", height: 150),
               ),
               ArabicText(
-                languageProvider.localizedStrings["Learn Quran"] ??
-                    'Learn Quran',
+                languageProvider.localizedStrings["Al Quran"] ?? 'Al Quran',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -51,50 +47,14 @@ class _SettingPageState extends State<SettingPage> {
               const SizedBox(height: 20),
 
               // 🌙 Edit Profile
-              buildSettingCard(
-                context,
-                icon: Icons.person,
-                title:
-                    languageProvider.localizedStrings["Edit Profile"] ??
-                    "Edit Profile",
-                iconColor: iconColor,
-                cardColor: cardColor,
-                textColor: textColor,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (builder) => const EditProfile(),
-                    ),
-                  );
-                },
-              ),
 
               // 🌍 Change Language
-              buildSettingCard(
-                context,
-                icon: Icons.language,
-                title:
-                    languageProvider.localizedStrings["Change Language"] ??
-                    "Change Language",
-                iconColor: iconColor,
-                cardColor: cardColor,
-                textColor: textColor,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (builder) => ChangeLangage()),
-                  );
-                },
-              ),
 
               // 🎨 Theme Setting
               buildSettingCard(
                 context,
                 icon: Icons.color_lens,
-                title:
-                    languageProvider.localizedStrings["Theme Setting"] ??
-                    "Theme Setting",
+                title: "Theme Setting",
                 iconColor: iconColor,
                 cardColor: cardColor,
                 textColor: textColor,
@@ -112,9 +72,7 @@ class _SettingPageState extends State<SettingPage> {
               buildSettingCard(
                 context,
                 icon: Icons.font_download_sharp,
-                title:
-                    languageProvider.localizedStrings["Font Setting"] ??
-                    "Font Setting",
+                title: "Font Setting",
                 iconColor: iconColor,
                 cardColor: cardColor,
                 textColor: textColor,
@@ -132,9 +90,7 @@ class _SettingPageState extends State<SettingPage> {
               buildSettingCard(
                 context,
                 icon: Icons.share,
-                title:
-                    languageProvider.localizedStrings["Invite Friends"] ??
-                    "Invite Friends",
+                title: "Invite Friends",
                 iconColor: iconColor,
                 cardColor: cardColor,
                 textColor: textColor,
@@ -142,22 +98,6 @@ class _SettingPageState extends State<SettingPage> {
               ),
 
               // 🚪 Logout
-              buildSettingCard(
-                context,
-                icon: Icons.logout,
-                title: languageProvider.localizedStrings["Logout"] ?? "Logout",
-                iconColor: Colors.red,
-                cardColor: cardColor,
-                textColor: textColor,
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const LogoutWidget();
-                    },
-                  );
-                },
-              ),
             ],
           ),
         ),

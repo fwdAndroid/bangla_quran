@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bangla_quran/provider/language_provider.dart';
 import 'package:bangla_quran/screens/quiz/score_screen.dart';
 import 'package:bangla_quran/widgets/arabic_text_widget.dart';
@@ -22,7 +21,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
   int? selectedOption;
   bool answered = false;
 
-  int timeLeft = 15;
+  int timeLeft = 24;
   Timer? timer;
 
   @override
@@ -46,8 +45,8 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
 
   void startTimer() {
     timer?.cancel();
-    timeLeft = 15;
-    timer = Timer.periodic(Duration(seconds: 1), (t) {
+    timeLeft = 24;
+    timer = Timer.periodic(const Duration(seconds: 1), (t) {
       if (timeLeft > 0) {
         setState(() => timeLeft--);
       } else {
@@ -68,7 +67,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
       }
     });
 
-    Future.delayed(Duration(seconds: 1), showCorrectAndNext);
+    Future.delayed(const Duration(seconds: 1), showCorrectAndNext);
   }
 
   void showCorrectAndNext() {
@@ -104,124 +103,147 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
     if (randomizedQuizzes.isEmpty) {
       return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
-          title: ArabicText(
+          backgroundColor: const Color(0xFF0C2340),
+          iconTheme: const IconThemeData(color: Colors.white),
+          title: Text(
             languageProvider.localizedStrings['Quiz'] ?? 'Quiz',
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ),
-        body: Center(child: CircularProgressIndicator()),
+        body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     var quiz = randomizedQuizzes[currentIndex];
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: ArabicText(
-          'Question ${currentIndex + 1}/${randomizedQuizzes.length}',
+        backgroundColor: const Color(0xFF0C2340),
+        automaticallyImplyLeading: false,
+        title: Text(
+          'Bangla Quiz',
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        backgroundColor: Colors.green,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: Text(
+              '${currentIndex + 1}/${randomizedQuizzes.length}',
+              style: const TextStyle(color: Colors.white, fontSize: 18),
+            ),
+          ),
+        ],
       ),
-      body: Container(
-        padding: EdgeInsets.all(20),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // Circular countdown timer
-            TweenAnimationBuilder<double>(
-              tween: Tween<double>(begin: 1, end: 0),
-              duration: Duration(seconds: 15),
-              builder: (context, value, child) {
-                return Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox(
-                      width: 80,
-                      height: 80,
-                      child: CircularProgressIndicator(
-                        value: value,
-                        strokeWidth: 8,
-                        color: Colors.green,
-                        backgroundColor: Colors.green.shade100,
-                      ),
+            // Timer box
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.alarm, color: Colors.orangeAccent, size: 24),
+                  const SizedBox(width: 6),
+                  Text(
+                    '$timeLeft',
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                    ArabicText(
-                      '${timeLeft}s',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-            SizedBox(height: 20),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+                  ),
+                ],
               ),
-              elevation: 5,
-              color: Colors.green.shade50,
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: ArabicText(
+            ),
+            const SizedBox(height: 20),
+
+            // Question box
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: const Color(0xFF0C2340),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Text(
                   quiz['question'],
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+
+            // Options
             ...List.generate(quiz['options'].length, (i) {
-              Color optionColor = Colors.white;
+              Color bgColor = const Color(0xFF0C2340);
               if (answered) {
-                if (i == quiz['correctIndex'])
-                  optionColor = Colors.green.shade400;
-                else if (i == selectedOption && i != quiz['correctIndex'])
-                  optionColor = Colors.red.shade400;
-              } else if (selectedOption == i) {
-                optionColor = Colors.green.shade100;
+                if (i == quiz['correctIndex']) {
+                  bgColor = Colors.green;
+                } else if (i == selectedOption && i != quiz['correctIndex']) {
+                  bgColor = Colors.red;
+                }
               }
 
-              return Container(
-                margin: EdgeInsets.symmetric(vertical: 8),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.all(16),
-                    backgroundColor: optionColor,
-                    foregroundColor: answered && i == quiz['correctIndex']
-                        ? Colors.white
-                        : Colors.green.shade800,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      side: BorderSide(color: Colors.green.shade800),
-                    ),
+              return GestureDetector(
+                onTap: () => selectOption(i),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  decoration: BoxDecoration(
+                    color: bgColor,
+                    borderRadius: BorderRadius.circular(16),
                   ),
-                  onPressed: () => selectOption(i),
-                  child: ArabicText(
-                    quiz['options'][i],
-                    style: TextStyle(fontSize: 18),
+                  child: Center(
+                    child: Text(
+                      quiz['options'][i],
+                      style: const TextStyle(color: Colors.white, fontSize: 18),
+                    ),
                   ),
                 ),
               );
             }),
-            Spacer(),
-            if (!answered)
-              ElevatedButton(
+
+            const Spacer(),
+
+            // Next / Skip button
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: showCorrectAndNext,
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                  backgroundColor: Colors.green.shade700,
+                  backgroundColor: Colors.orangeAccent,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 100,
+                    vertical: 16,
                   ),
                 ),
-                child: ArabicText(
-                  'Skip',
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                child: Text(
+                  answered ? 'Next' : 'Skip',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                onPressed: showCorrectAndNext,
               ),
-            const SizedBox(height: 40),
+            ),
+            const SizedBox(height: 50),
           ],
         ),
       ),
